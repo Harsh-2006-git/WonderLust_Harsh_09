@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication - Wonderlust</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #ff385c;
+        --primary-light: #ff385c;
+        --secondary: #4b7bec;
+        --dark: #333;
+        --light: #f8f9fa;
+        --gray: #6c757d;
+        --white: #ffffff;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 20px;
+        color: var(--dark);
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        background: var(--white);
+        box-shadow: var(--shadow);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: var(--transition);
+      }
+
+      .header {
+        background: var(--primary);
+        color: var(--white);
+        padding: 25px;
+        text-align: center;
+      }
+
+      .header h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        font-size: 14px;
+        opacity: 0.9;
+      }
+
+      .tab-container {
+        display: flex;
+        border-bottom: 1px solid #eee;
+      }
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        padding: 15px;
+        cursor: pointer;
+        font-weight: 500;
+        color: var(--gray);
+        transition: var(--transition);
+      }
+
+      .tab.active {
+        color: var(--primary);
+        border-bottom: 2px solid var(--primary);
+      }
+
+      .form-container {
+        padding: 25px;
+      }
+
+      .form-box {
+        display: none;
+      }
+
+      .form-box.active {
+        display: block;
+        animation: fadeIn 0.5s forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .input-group {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .input-group i {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: var(--gray);
+        font-size: 14px;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 12px 15px 12px 40px;
+        background: var(--light);
+        color: var(--dark);
+        border: none;
+        outline: none;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: var(--transition);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .input-group input:focus {
+        box-shadow: 0 5px 15px rgba(255, 75, 75, 0.1);
+      }
+
+      input[type="submit"] {
+        width: 100%;
+        background: var(--primary);
+        color: var(--white);
+        padding: 12px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: var(--transition);
+      }
+
+      input[type="submit"]:hover {
+        background: var(--primary-light);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 75, 75, 0.3);
+      }
+
+      .options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 15px 0;
+        font-size: 13px;
+      }
+
+      .options .remember {
+        display: flex;
+        align-items: center;
+      }
+
+      .options .remember input {
+        margin-right: 5px;
+      }
+
+      .options a {
+        color: var(--gray);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .options a:hover {
+        color: var(--primary);
+      }
+
+      .social-login {
+        margin: 25px 0 15px;
+        text-align: center;
+      }
+
+      .social-login p {
+        font-size: 12px;
+        color: var(--gray);
+        margin-bottom: 15px;
+        position: relative;
+      }
+
+      .social-login p::before,
+      .social-login p::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 30%;
+        height: 1px;
+        background: #e0e0e0;
+      }
+
+      .social-login p::before {
+        left: 0;
+      }
+
+      .social-login p::after {
+        right: 0;
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .social-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--light);
+        color: var(--dark);
+        transition: var(--transition);
+        text-decoration: none;
+      }
+
+      .social-icons a:hover {
+        background: var(--primary);
+        color: var(--white);
+        transform: translateY(-3px);
+      }
+
+      .alert {
+        padding: 12px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        width: 100%;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+      }
+
+      .alert i {
+        margin-right: 10px;
+        font-size: 16px;
+      }
+
+      .alert-success {
+        background-color: #e6ffed;
+        color: #1a7a3a;
+        border-left: 4px solid #1a7a3a;
+      }
+
+      .alert-danger {
+        background-color: #fff0f0;
+        color: #d32f2f;
+        border-left: 4px solid #d32f2f;
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: var(--gray);
+        font-size: 14px;
+      }
+
+      /* Desktop styles */
+      @media (min-width: 769px) {
+        .container {
+          width: 900px;
+          max-width: 900px;
+          height: 550px;
+        }
+
+        .mobile-only {
+          display: none;
+        }
+
+        .desktop-view {
+          display: flex;
+          height: 100%;
+        }
+
+        .left-panel {
+          width: 50%;
+          background: var(--primary);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          padding: 40px;
+          text-align: center;
+        }
+
+        .left-panel h2 {
+          font-size: 28px;
+          margin-bottom: 15px;
+        }
+
+        .left-panel p {
+          margin-bottom: 30px;
+          font-size: 14px;
+          line-height: 1.6;
+        }
+
+        .left-panel .btn {
+          display: inline-block;
+          padding: 12px 35px;
+          background: transparent;
+          border: 2px solid var(--white);
+          color: var(--white);
+          text-decoration: none;
+          border-radius: 30px;
+          font-weight: 500;
+          transition: var(--transition);
+          text-transform: uppercase;
+          font-size: 12px;
+          letter-spacing: 1px;
+        }
+
+        .left-panel .btn:hover {
+          background: var(--white);
+          color: var(--primary);
+        }
+
+        .right-panel {
+          width: 50%;
+          padding: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .form-container {
+          width: 100%;
+          max-width: 350px;
+          padding: 0;
+        }
+
+        .tab-container {
+          display: none;
+        }
+      }
+
+      /* Mobile view styles - Hide desktop view on mobile */
+      @media (max-width: 768px) {
+        .desktop-view {
+          display: none;
+        }
+
+        .mobile-only {
+          display: block;
+        }
+      }
+      @media (max-width: 768px) {
+        .desktop-view {
+          display: none;
+        }
+
+        .mobile-only {
+          display: block;
+        }
+      }
+      .container {
+        width: 90%;
+        height: 550px;
+      }
+      .mera {
+        text-align: center;
+        background-color: var(--primary);
+        margin: 0.75rem;
+        color: white;
+        border-radius: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="container">
+      <%- include('../partials/flash') %>
+      <!-- Mobile View -->
+      <div class="mobile-only">
+        <div class="mera"><h1>WonderLust</h1></div>
+
+        <div class="tab-container">
+          <div class="tab active" id="loginTab">Sign In</div>
+          <div class="tab" id="signupTab">Sign Up</div>
+        </div>
+
+        <div class="form-container">
+          <!-- Login Form -->
+          <div class="form-box active" id="loginForm">
+            <form action="/login" method="POST">
+              <% if(locals.success && success.length) { %>
+              <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i> <%= success %>
+              </div>
+              <% } %> <% if(locals.error && error.length) { %>
+              <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i> <%= error %>
+              </div>
+              <% } %>
+
+              <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  required
+                />
+              </div>
+
+              <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  name="password"
+                  id="loginPassword"
+                  placeholder="Password"
+                  required
+                />
+                <span
+                  class="password-toggle"
+                  onclick="togglePassword('loginPassword')"
+                >
+                </span>
+              </div>
+
+              <div class="options">
+                <div class="remember">
+                  <input type="checkbox" id="remember" name="remember" />
+                  <label for="remember">Remember me</label>
+                </div>
+                <a href="#">Forgot password?</a>
+              </div>
+
+              <input type="submit" value="Login" />
+
+              <div class="social-login">
+                <p>Or sign in with</p>
+                <div class="social-icons">
+                  <a href="#"><i class="fab fa-google"></i></a>
+                  <a href="#"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Signup Form -->
+          <div class="form-box" id="signupForm">
+            <form action="/signup" method="POST">
+              <% if(locals.success && success.length) { %>
+              <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i> <%= success %>
+              </div>
+              <% } %> <% if(locals.error && error.length) { %>
+              <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i> <%= error %>
+              </div>
+              <% } %>
+
+              <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  required
+                />
+              </div>
+
+              <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  required
+                />
+              </div>
+
+              <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  name="password"
+                  id="signupPassword"
+                  placeholder="Password"
+                  required
+                />
+                <span
+                  class="password-toggle"
+                  onclick="togglePassword('signupPassword')"
+                >
+                </span>
+              </div>
+
+              <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  placeholder="Confirm Password"
+                  required
+                />
+                <span
+                  class="password-toggle"
+                  onclick="togglePassword('confirmPassword')"
+                >
+                </span>
+              </div>
+
+              <input type="submit" value="Register" />
+
+              <div class="social-login">
+                <p>Or sign up with</p>
+                <div class="social-icons">
+                  <a href="#"><i class="fab fa-google"></i></a>
+                  <a href="#"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop View (Original Sliding Design) -->
+      <div class="desktop-view">
+        <!-- Login Section -->
+        <div class="left-panel" id="leftPanel">
+          <h2 class="floating">Hello, Traveler's!</h2>
+          <p>🌅 Good to see you again! Any dream destinations? 🌴</p>
+          <a href="#" class="btn" id="desktopSignupBtn">SIGN UP</a>
+        </div>
+
+        <div class="right-panel" id="rightPanel">
+          <div class="form-container">
+            <!-- Login Form -->
+            <div class="form-box active" id="desktopLoginForm">
+              <h2
+                style="font-size: 24px; text-align: center; margin-bottom: 25px"
+              >
+                Sign In
+              </h2>
+              <form action="/login" method="POST">
+                <% if(locals.success && success.length) { %>
+                <div class="alert alert-success">
+                  <i class="fas fa-check-circle"></i> <%= success %>
+                </div>
+                <% } %> <% if(locals.error && error.length) { %>
+                <div class="alert alert-danger">
+                  <i class="fas fa-exclamation-circle"></i> <%= error %>
+                </div>
+                <% } %>
+
+                <div class="input-group">
+                  <i class="fas fa-user"></i>
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    required
+                  />
+                </div>
+
+                <div class="input-group">
+                  <i class="fas fa-lock"></i>
+                  <input
+                    type="password"
+                    name="password"
+                    id="desktopLoginPassword"
+                    placeholder="Password"
+                    required
+                  />
+                  <span
+                    class="password-toggle"
+                    onclick="togglePassword('desktopLoginPassword')"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </span>
+                </div>
+
+                <div class="options">
+                  <div class="remember">
+                    <input
+                      type="checkbox"
+                      id="desktopRemember"
+                      name="remember"
+                    />
+                    <label for="desktopRemember">Remember me</label>
+                  </div>
+                  <a href="#">Forgot password?</a>
+                </div>
+
+                <input type="submit" value="Login" />
+
+                <div class="social-login">
+                  <p>Or sign in with</p>
+                  <div class="social-icons">
+                    <a href="#"><i class="fab fa-google"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Signup Form -->
+            <div class="form-box" id="desktopSignupForm">
+              <h2
+                style="font-size: 24px; text-align: center; margin-bottom: 25px"
+              >
+                Create an Account
+              </h2>
+              <form action="/signup" method="POST">
+                <% if(locals.success && success.length) { %>
+                <div class="alert alert-success">
+                  <i class="fas fa-check-circle"></i> <%= success %>
+                </div>
+                <% } %> <% if(locals.error && error.length) { %>
+                <div class="alert alert-danger">
+                  <i class="fas fa-exclamation-circle"></i> <%= error %>
+                </div>
+                <% } %>
+
+                <div class="input-group">
+                  <i class="fas fa-user"></i>
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    required
+                  />
+                </div>
+
+                <div class="input-group">
+                  <i class="fas fa-envelope"></i>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address"
+                    required
+                  />
+                </div>
+
+                <div class="input-group">
+                  <i class="fas fa-lock"></i>
+                  <input
+                    type="password"
+                    name="password"
+                    id="desktopSignupPassword"
+                    placeholder="Password"
+                    required
+                  />
+                  <span
+                    class="password-toggle"
+                    onclick="togglePassword('desktopSignupPassword')"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </span>
+                </div>
+
+                <div class="input-group">
+                  <i class="fas fa-lock"></i>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    id="desktopConfirmPassword"
+                    placeholder="Confirm Password"
+                    required
+                  />
+                  <span
+                    class="password-toggle"
+                    onclick="togglePassword('desktopConfirmPassword')"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </span>
+                </div>
+
+                <input type="submit" value="Register" />
+
+                <div class="social-login">
+                  <p>Or sign up with</p>
+                  <div class="social-icons">
+                    <a href="#"><i class="fab fa-google"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Mobile tab switching
+      const loginTab = document.getElementById("loginTab");
+      const signupTab = document.getElementById("signupTab");
+      const loginForm = document.getElementById("loginForm");
+      const signupForm = document.getElementById("signupForm");
+
+      loginTab.addEventListener("click", () => {
+        loginTab.classList.add("active");
+        signupTab.classList.remove("active");
+        loginForm.classList.add("active");
+        signupForm.classList.remove("active");
+      });
+
+      signupTab.addEventListener("click", () => {
+        signupTab.classList.add("active");
+        loginTab.classList.remove("active");
+        signupForm.classList.add("active");
+        loginForm.classList.remove("active");
+      });
+
+      // Desktop switching
+      const desktopSignupBtn = document.getElementById("desktopSignupBtn");
+      const desktopLoginForm = document.getElementById("desktopLoginForm");
+      const desktopSignupForm = document.getElementById("desktopSignupForm");
+      const leftPanel = document.getElementById("leftPanel");
+
+      desktopSignupBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        desktopLoginForm.classList.remove("active");
+        desktopSignupForm.classList.add("active");
+        leftPanel.innerHTML = `
+          <h2 class="floating">Welcome Back!</h2>
+          <p>To keep connected with us please login with your personal info</p>
+          <a href="#" class="btn" id="desktopLoginBtn">SIGN IN</a>
+        `;
+
+        // Add event listener to the new login button
+        document
+          .getElementById("desktopLoginBtn")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            desktopSignupForm.classList.remove("active");
+            desktopLoginForm.classList.add("active");
+            leftPanel.innerHTML = `
+            <h2 class="floating">Hello, Friend!</h2>
+            <p>Enter your personal details and start journey with us</p>
+            <a href="#" class="btn" id="desktopSignupBtn">SIGN UP</a>
+          `;
+
+            // Reattach event listener
+            document
+              .getElementById("desktopSignupBtn")
+              .addEventListener("click", desktopSignupBtn.onclick);
+          });
+      });
+
+      // Check URL params to show signup form if needed
+      window.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("form") === "signup") {
+          // For mobile
+          signupTab.click();
+
+          // For desktop
+          if (desktopSignupBtn) {
+            desktopSignupBtn.click();
+          }
+        }
+      });
+
+      // Password toggle functionality
+      function togglePassword(id) {
+        const passwordField = document.getElementById(id);
+        const toggleIcon = passwordField.nextElementSibling.querySelector("i");
+
+        if (passwordField.type === "password") {
+          passwordField.type = "text";
+          toggleIcon.classList.remove("fa-eye");
+          toggleIcon.classList.add("fa-eye-slash");
+        } else {
+          passwordField.type = "password";
+          toggleIcon.classList.remove("fa-eye-slash");
+          toggleIcon.classList.add("fa-eye");
+        }
+      }
+    </script>
+  </body>
+</html>

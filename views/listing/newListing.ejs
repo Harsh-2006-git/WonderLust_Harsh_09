@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Listing | WonderLust</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+    rel="icon"
+    href="https://scrnshts.club/wp-content/uploads/2022/05/ico.png"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    
+    <style>
+      :root {
+        --airbnb-red: #ff385c;
+        --airbnb-dark: #222222;
+        --airbnb-light-gray: #f7f7f7;
+        --airbnb-text: #484848;
+        --airbnb-border: #ebebeb;
+        --airbnb-hover-red: #e61e4d;
+      }
+
+      * {
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+      }
+
+      body {
+        font-family: "Circular", -apple-system, BlinkMacSystemFont, Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        background-color: var(--airbnb-light-gray);
+        color: var(--airbnb-text);
+        line-height: 1.4;
+      }
+
+      .app-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .navbar {
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      .navbar-brand {
+        color: var(--airbnb-red) !important;
+        font-weight: 800;
+        font-size: 1.5rem;
+      }
+
+      .listing-form {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        padding: 40px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .form-section {
+        border-bottom: 1px solid var(--airbnb-border);
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+      }
+
+      .form-section:last-of-type {
+        border-bottom: none;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .section-header i {
+        color: var(--airbnb-red);
+        margin-right: 15px;
+        font-size: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--airbnb-dark);
+        margin: 0;
+      }
+
+      .form-label {
+        font-weight: 500;
+        color: var(--airbnb-dark);
+        margin-bottom: 8px;
+      }
+
+      .form-control,
+      .form-select {
+        border: 1px solid var(--airbnb-border);
+        border-radius: 10px;
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--airbnb-red);
+        box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.2);
+      }
+
+      .input-group-text {
+        background-color: transparent;
+        border: 1px solid var(--airbnb-border);
+        border-right: none;
+      }
+
+      .btn-primary {
+        background-color: var(--airbnb-red);
+        border-color: var(--airbnb-red);
+        border-radius: 10px;
+        padding: 12px 24px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--airbnb-hover-red);
+        border-color: var(--airbnb-hover-red);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-outline-secondary {
+        border-radius: 10px;
+        border-color: var(--airbnb-dark);
+        color: var(--airbnb-dark);
+        transition: all 0.3s ease;
+      }
+
+      .btn-outline-secondary:hover {
+        background-color: var(--airbnb-light-gray);
+        border-color: var(--airbnb-dark);
+      }
+
+      .character-count {
+        font-size: 0.875rem;
+        color: #717171;
+        text-align: right;
+        margin-top: 5px;
+      }
+
+      @media (max-width: 768px) {
+        .listing-form {
+          padding: 20px;
+        }
+
+        .section-title {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <body>
+      <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+  
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+  
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ff5a5f;
+        }
+  
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+  
+        nav {
+            display: flex;
+            gap: 20px;
+            position: absolute;
+            right: 20px;
+        }
+  
+        nav a {
+            text-decoration: none;
+            color: #484848;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+  
+        nav a:hover {
+            color: #ff5a5f;
+        }
+  
+        .mobile-dropdown-btn {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+  
+        .mobile-dropdown-btn span {
+            width: 25px;
+            height: 3px;
+            background-color: #484848;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+  
+        .mobile-dropdown-content {
+            display: none;
+        }
+  
+        @media screen and (max-width: 768px) {
+            nav {
+                display: none;
+            }
+  
+            .mobile-dropdown-btn {
+                display: flex;
+            }
+  
+            .mobile-dropdown-content {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 30px;
+                width: 250px;
+                background-color: rgba(255, 255, 255, 0.9);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                border-radius: 12px;
+                overflow: hidden;
+                backdrop-filter: blur(10px);
+                z-index: 100;
+            }
+  
+            .mobile-dropdown-content a {
+                padding: 15px;
+                text-align: left;
+                border-bottom: 1px solid #f0f0f0;
+                display: block;
+                color: #484848;
+                transition: background-color 0.3s ease;
+            }
+  
+            .mobile-dropdown-content a:hover {
+                background-color: rgba(0,0,0,0.05);
+                color: #ff5a5f;
+            }
+  
+            .mobile-dropdown-content.show {
+                display: block;
+            }
+        }
+        .back{
+          background-color: #d50c3d;
+           color: #ebebeb;
+           border-radius: 50px;
+           font-size: 28px;
+          
+        }
+        .piche{
+          margin-top: -3.5rem;
+        }
+        .pich{
+          margin-top: -1rem;
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+        <div class="logo">
+            <img 
+                src="https://logos-world.net/wp-content/uploads/2020/07/Airbnb-Emblem.png" 
+                alt="WonderLust Logo"
+            />
+            WonderLust
+        </div>
+        <nav>
+          <a href="/listings"
+          ><i class="fa-solid fa-house"></i>&nbsp;&nbsp; Homes</a
+        >
+        <a href="/listings"
+          ><i class="fa-solid fa-globe"></i>&nbsp;&nbsp;Experiences</a
+        >
+        <a href="/listings/new"
+          ><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp; Airbnb your
+          home</a
+        >
+        <%if(!currentUser){%>
+        <a href="/auth"
+          ><i class="fa-solid fa-right-to-bracket"></i>
+          &nbsp;&nbsp;Login/SignUp</a
+        >
+        <%}%> <%if(currentUser){%>
+        <a href="/logout"
+          ><i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp; Logout</a
+        >
+        <%}%>
+        <a href="/user/liked-listings">
+          <i class="fas fa-heart"></i>&nbsp;&nbsp; Favorites
+        </a>
+        </nav>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-btn" onclick="toggleDropdown()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="mobile-dropdown-content">
+              <a href="/listings"
+              ><i class="fa-solid fa-house"></i>&nbsp;&nbsp; Homes</a
+            >
+            <a href="/listings"
+              ><i class="fa-solid fa-globe"></i>&nbsp;&nbsp;Experiences</a
+            >
+            <a href="/listings/new"
+              ><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp; Airbnb your
+              home</a
+            >
+            <%if(!currentUser){%>
+            <a href="/auth"
+              ><i class="fa-solid fa-right-to-bracket"></i>
+              &nbsp;&nbsp;Login/SignUp</a
+            >
+            <%}%> <%if(currentUser){%>
+            <a href="/logout"
+              ><i class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp; Logout</a
+            >
+            <%}%>
+            <a href="/user/liked-listings">
+              <i class="fas fa-heart"></i>&nbsp;&nbsp; Favorites
+            </a>
+            </div>
+        </div>
+    </header>
+  
+    <script>
+        function toggleDropdown() {
+            const dropdownContent = document.querySelector('.mobile-dropdown-content');
+            dropdownContent.classList.toggle('show');
+        }
+  
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.querySelector('.mobile-dropdown-content');
+            const dropdownBtn = document.querySelector('.mobile-dropdown-btn');
+            
+            if (dropdown.classList.contains('show') && 
+                !dropdown.contains(event.target) && 
+                !dropdownBtn.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+    </script>
+  </body>
+  <%- include('../partials/flash') %> 
+    <div class="app-container">
+      <form class="listing-form needs-validation" action="/listings" method="POST" novalidate>
+        <div class="form-section">
+          <div class="section-header">
+            <i class="fas fa-home"></i>
+            <h2 class="section-title">Basic Information</h2>
+          </div>
+
+          <div class="row">
+            <div class="col-12 mb-0">
+              <label for="title" class="form-label">Listing Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                name="listing[title]"
+                required
+                placeholder="Cozy beachfront cottage"
+              />
+              <div class="invalid-feedback">
+                Please provide a title for your listing.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="description" class="form-label">Description</label>
+              <textarea
+                class="form-control"
+                id="description"
+                name="listing[description]"
+                rows="1"
+                required
+                placeholder="Tell guests what makes your place special"
+                maxlength="500"
+              ></textarea>
+              <div class="invalid-feedback">
+                Please provide a description for your listing.
+              </div>
+              <div class="character-count">0/500</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section piche">
+          <div class="section-header">
+            <i class="fas fa-image"></i>
+            <h2 class="section-title">Photos</h2>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <label for="image" class="form-label">Main Photo URL</label>
+              <input
+                type="url"
+                class="form-control"
+                id="image"
+                name="listing[image]"
+                placeholder="https://example.com/your-photo.jpg"
+              />
+              <div class="invalid-feedback">
+                Please provide a valid image URL.
+              </div>
+              <small class="text-muted"
+                >Add more photos after creating your listing</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section pich">
+          <div class="section-header">
+            <i class="fas fa-tag"></i>
+            <h2 class="section-title">Pricing</h2>
+          </div>
+
+          <div class="row">
+            <div class="col-md-0">
+              <label for="price">Price per Night</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">₹</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="price"
+                  name="listing[price]"
+                  min="0"
+                  required
+                  placeholder="100"
+                />
+                <div class="invalid-feedback">
+                  Please provide a valid price.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section pich">
+          <div class="section-header">
+            <i class="fas fa-map-marker-alt"></i>
+            <h2 class="section-title">Location</h2>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="country" class="form-label">Country</label>
+              <input
+                type="text"
+                class="form-control"
+                id="country"
+                name="listing[country]"
+                required
+                placeholder="Country"
+              />
+              <div class="invalid-feedback">
+                Please provide a country.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="location" class="form-label">City/Area</label>
+              <input
+                type="text"
+                class="form-control"
+                id="location"
+                name="listing[location]"
+                required
+                placeholder="City or area"
+              />
+              <div class="invalid-feedback">
+                Please provide a city or area.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-12 d-grid gap-3">
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="fas fa-plus me-2"></i>Create Listing
+            </button>
+            <a href="/listings" class="btn btn-outline-secondary btn-lg">
+              <i class="fas fa-times me-2"></i>Cancel
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const description = document.getElementById("description");
+      const charCount = document.querySelector(".character-count");
+
+      description.addEventListener("input", function () {
+        const count = this.value.length;
+        charCount.textContent = `${count}/500`;
+
+        if (count >= 450) {
+          charCount.style.color = "#ff385c"; // Fixed from let(--airbnb - red)
+        } else {
+          charCount.style.color = "#717171";
+        }
+      });
+
+
+      (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+          form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+      })()
+    </script>
+  </body>
+</html>
