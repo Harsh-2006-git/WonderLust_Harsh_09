@@ -43,6 +43,7 @@
         color: var(--airbnb-text);
         line-height: 1.5;
         font-size: 14px;
+     
       }
 
       /* Header Styling */
@@ -389,9 +390,12 @@
       #taxToggle{
         width: 3rem;
       }
+      .bod{
+        padding: -20px;
+      }
     </style>
   </head>
-  <body>
+  <body class="bod">
     <header>
       <div class="logo">
         <img
@@ -433,7 +437,7 @@
 
               body {
                 background-color: #f7f7f7;
-                padding: 20px;
+                padding: 0px;
               }
 
               .header {
@@ -484,7 +488,9 @@
               .menu-icon {
                 margin-right: 8px;
               }
-
+              .body{
+                padding: -20px;
+              }
               .profile-icon {
                 width: 40px;
                 height: 40px;
@@ -519,7 +525,7 @@
                 position: absolute;
                 top: 50px;
                 right: 0;
-                width: 240px;
+                width: 260px;
                 background-color: white;
                 border-radius: 12px;
                 box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
@@ -566,6 +572,7 @@
                 ><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp; Airbnb your
                 home</a
               ></div>
+              
               <div class="profile-section">
                 <button class="profile-button">
                   <div class="menu-icon">
@@ -674,16 +681,7 @@
           <a href="/user/liked-listings">
             <i class="fas fa-heart"></i>&nbsp;&nbsp; Favorites
           </a>
-          <div class="d-flex align-items-center justify-content-end">
-            <span class="me-2 text-muted">Prices without taxes</span>
-            <div class="form-check form-switch">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="taxToggle"
-                checked
-              />
-            </div>
+          
           </div>
         </div>
       </div>

@@ -28,12 +28,21 @@ const UserRoutes = require("./routes/user");
 const likedListingsRoutes = require("./routes/likedListings");
 
 // Session configuration
+// Session configuration
 const store = MongoStore.create({
   mongoUrl: LiveURL,
   crypto: {
     secret: "your-secret-key",
   },
   touchAfter: 24 * 60 * 60,
+  clientOptions: {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    ssl: true,
+    tls: true,
+    tlsAllowInvalidCertificates: false,
+    tlsAllowInvalidHostnames: false,
+  },
 });
 
 store.on("error", () => {
@@ -77,9 +86,16 @@ app.set("views", path.join(__dirname, "views"));
 
 // Database Connection
 
+// Database Connection
+// Database Connection
 async function main() {
   try {
-    await mongoose.connect(LiveURL);
+    await mongoose.connect(LiveURL, {
+      ssl: true,
+      tls: true,
+      tlsAllowInvalidCertificates: false,
+      tlsAllowInvalidHostnames: false,
+    });
     console.log("✅ Database connected successfully");
   } catch (err) {
     console.error("❌ Database connection failed:", err);
