@@ -9,7 +9,7 @@ const { isLoggedIn, isOwner } = require("../middleware/isLogin.js");
 
 // Combined auth page route
 router.get("/", (req, res) => {
-  res.redirect("/auth");
+  res.redirect("/listings");
 });
 
 // Auth page that contains both login and signup
