@@ -83,8 +83,8 @@ async function main() {
     await mongoose.connect(LiveURL);
     console.log("✅ Database connected successfully");
   } catch (err) {
-    console.error("❌ Database connection failed:", err);
-    process.exit(1);
+    console.error("❌ Database connection failed initially. The app will keep trying to connect...", err);
+    // Don't exit - allow the app to stay alive and retry or show errors
   }
 }
 main();

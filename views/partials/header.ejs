@@ -268,7 +268,7 @@
         <i class="fa-solid fa-bars"></i>
         <% if (currentUser) { %>
           <div class="hdr-avatar">
-            <%= currentUser.username.charAt(0).toUpperCase() %>
+            <%= (currentUser.username && currentUser.username.length > 0) ? currentUser.username.charAt(0).toUpperCase() : 'U' %>
           </div>
         <% } else { %>
           <div class="hdr-avatar hdr-avatar-guest">
@@ -284,11 +284,11 @@
           <!-- Logged-in user card -->
           <div class="hdr-user-card">
             <div class="hdr-user-card-avatar">
-              <%= currentUser.username.charAt(0).toUpperCase() %>
+              <%= (currentUser.username && currentUser.username.length > 0) ? currentUser.username.charAt(0).toUpperCase() : 'U' %>
             </div>
             <div class="hdr-user-card-info">
-              <div class="hdr-user-card-name"><%= currentUser.username %></div>
-              <div class="hdr-user-card-email"><%= currentUser.email %></div>
+              <div class="hdr-user-card-name"><%= currentUser.username || 'User' %></div>
+              <div class="hdr-user-card-email"><%= currentUser.email || '' %></div>
             </div>
           </div>
         <% } else { %>

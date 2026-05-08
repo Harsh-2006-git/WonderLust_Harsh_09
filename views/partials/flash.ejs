@@ -1,4 +1,4 @@
-<% if (success && success.length > 0) { %>
+<% if (typeof success !== 'undefined' && success && success.length > 0) { %>
 <div class="alert alert-success alert-dismissible fade show" role="alert">
   <%= success %>
   <button
@@ -8,7 +8,9 @@
     aria-label="Close"
   ></button>
 </div>
-<% } %> <% if (error && error.length > 0) { %>
+<% } %> 
+
+<% if (typeof error !== 'undefined' && error && error.length > 0) { %>
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
   <%= error %>
   <button

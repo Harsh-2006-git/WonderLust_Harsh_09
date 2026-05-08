@@ -526,7 +526,8 @@
               >
           </div>
         </div>
-      <%- include('../partials/flash') %> <% if (AllListing.length > 0) { %>
+      <%- include('../partials/flash') %>
+      <% if (typeof AllListing !== 'undefined' && AllListing && AllListing.length > 0) { %>
 
       <div class="row">
         <% AllListing.forEach(listing => { %>
