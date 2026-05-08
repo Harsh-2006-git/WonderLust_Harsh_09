@@ -14,7 +14,7 @@ const LocalStrategy = require("passport-local");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 // Adjust path as needed
-const LiveURL = process.env.mongoDB;
+const LiveURL = process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/Wonderlust";
 
 // Import models
 const Listing = require("./models/listing.js");
@@ -31,26 +31,15 @@ const likedListingsRoutes = require("./routes/likedListings");
 // Session configuration
 const store = MongoStore.create({
   mongoUrl: LiveURL,
-  crypto: {
-    secret: "your-secret-key",
-  },
   touchAfter: 24 * 60 * 60,
-  clientOptions: {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    ssl: true,
-    tls: true,
-    tlsAllowInvalidCertificates: false,
-    tlsAllowInvalidHostnames: false,
-  },
 });
 
-store.on("error", () => {
-  console.log("error", err);
+store.on("error", (err) => {
+  console.log("Session Store Error:", err);
 });
 const sessionOptions = {
   store,
-  secret: "your-secret-key", // Change this to a secure random string
+  secret: process.env.SESSION_SECRET || "your-secret-key", // Change this to a secure random string
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -76,6 +65,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.notRegistered = req.flash("notRegistered");
   res.locals.currentUser = req.user;
   next();
 });
@@ -90,12 +80,7 @@ app.set("views", path.join(__dirname, "views"));
 // Database Connection
 async function main() {
   try {
-    await mongoose.connect(LiveURL, {
-      ssl: true,
-      tls: true,
-      tlsAllowInvalidCertificates: false,
-      tlsAllowInvalidHostnames: false,
-    });
+    await mongoose.connect(LiveURL);
     console.log("✅ Database connected successfully");
   } catch (err) {
     console.error("❌ Database connection failed:", err);
@@ -117,8 +102,8 @@ app.use((req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
+  console.error("Global Error Handler:", err);
+  res.status(500).send("Something broke! Check the console for details.");
 });
 
 // Server Start

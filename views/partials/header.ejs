@@ -1,0 +1,429 @@
+<style>
+  /* ============================================================
+     SHARED HEADER — WonderLust
+  ============================================================ */
+  :root {
+    --hdr-red:    #ff385c;
+    --hdr-black:  #222222;
+    --hdr-white:  #ffffff;
+    --hdr-gray:   #717171;
+    --hdr-height: 80px;
+  }
+
+  /* outer shell */
+  header.site-header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: var(--hdr-height);
+    background: var(--hdr-white);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.10);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+    box-sizing: border-box;
+  }
+
+  /* logo */
+  header.site-header .hdr-logo {
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 700; font-size: 1.4rem;
+    font-family: monospace; color: var(--hdr-red);
+    text-decoration: none;
+  }
+  header.site-header .hdr-logo img { height: 46px; width: auto; }
+
+  /* right wrapper */
+  header.site-header .hdr-right {
+    display: flex; align-items: center; gap: 16px;
+  }
+
+  /* tax label */
+  header.site-header .hdr-tax {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--hdr-gray); white-space: nowrap;
+  }
+
+  /* host link */
+  header.site-header .hdr-host-link {
+    text-decoration: none; color: var(--hdr-black);
+    font-weight: 500; font-size: 14px;
+    padding: 10px 14px; border-radius: 22px;
+    transition: background 0.2s ease; white-space: nowrap;
+  }
+  header.site-header .hdr-host-link:hover {
+    background: rgba(255,56,92,0.08); color: var(--hdr-red);
+  }
+
+  /* ---- profile pill ---------------------------------------- */
+  header.site-header .hdr-profile-wrap { position: relative; }
+
+  header.site-header .hdr-pill {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--hdr-white);
+    border: 1px solid #dddddd;
+    border-radius: 21px;
+    padding: 5px 5px 5px 14px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+    font-size: 14px; color: var(--hdr-black);
+  }
+  header.site-header .hdr-pill:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+
+  header.site-header .hdr-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--hdr-red), #e61e4d);
+  }
+  /* grey avatar when guest */
+  header.site-header .hdr-avatar.hdr-avatar-guest { background: #717171; }
+
+  /* ---- dropdown panel -------------------------------------- */
+  header.site-header .hdr-profile-dd {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px); right: 0;
+    width: 270px;
+    background: var(--hdr-white);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.16);
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
+    z-index: 2000;
+  }
+  header.site-header .hdr-profile-dd.hdr-dd-open { display: block; }
+
+  /* --- logged-in user card (top of dropdown) --- */
+  .hdr-user-card {
+    display: flex; align-items: center; gap: 12px;
+    padding: 18px 18px 14px;
+    background: linear-gradient(135deg, #fff5f7, #ffffff);
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .hdr-user-card-avatar {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--hdr-red), #e61e4d);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 18px; font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(255,56,92,0.35);
+  }
+  .hdr-user-card-info { overflow: hidden; }
+  .hdr-user-card-name {
+    font-weight: 700; font-size: 15px;
+    color: var(--hdr-black);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .hdr-user-card-email {
+    font-size: 12px; color: var(--hdr-gray);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    margin-top: 2px;
+  }
+
+  /* --- NOT logged in — login banner at top of dropdown --- */
+  .hdr-login-banner {
+    padding: 20px 18px 16px;
+    background: linear-gradient(135deg, #fff5f7, #fff);
+    border-bottom: 1px solid #f0f0f0;
+    text-align: center;
+  }
+  .hdr-login-banner p {
+    font-size: 13px; color: var(--hdr-gray);
+    margin: 0 0 12px;
+    line-height: 1.4;
+  }
+  .hdr-login-btn {
+    display: block;
+    width: 100%;
+    padding: 11px 0;
+    background: var(--hdr-red);
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 3px 12px rgba(255,56,92,0.3);
+  }
+  .hdr-login-btn:hover {
+    background: #e61e4d; color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 16px rgba(255,56,92,0.4);
+  }
+
+  /* --- dropdown menu items --- */
+  .hdr-dd-items { padding: 6px 0; }
+
+  header.site-header .hdr-dd-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 18px;
+    font-size: 14px; color: var(--hdr-black);
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  header.site-header .hdr-dd-item:hover {
+    background: #fef2f4; color: var(--hdr-red);
+  }
+  header.site-header .hdr-dd-item i {
+    width: 16px; text-align: center; color: var(--hdr-gray); font-size: 13px;
+  }
+  header.site-header .hdr-dd-item:hover i { color: var(--hdr-red); }
+
+  /* logout item — red tint */
+  header.site-header .hdr-dd-item.hdr-logout {
+    color: var(--hdr-red); border-top: 1px solid #f0f0f0; margin-top: 4px;
+  }
+  header.site-header .hdr-dd-item.hdr-logout i { color: var(--hdr-red); }
+  header.site-header .hdr-dd-item.hdr-logout:hover { background: #fff0f3; }
+
+  /* ---- mobile hamburger ----------------------------------- */
+  header.site-header .hdr-mobile { display: none; position: relative; }
+  header.site-header .hdr-mobile-btn {
+    background: none; border: none; cursor: pointer; padding: 8px;
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  header.site-header .hdr-mobile-btn span {
+    display: block; width: 24px; height: 2.5px;
+    background: var(--hdr-red); border-radius: 2px; transition: 0.3s;
+  }
+  header.site-header .hdr-mobile-dd {
+    display: none;
+    position: absolute; top: calc(100% + 8px); right: 0;
+    width: 240px;
+    background: var(--hdr-white);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.16);
+    border: 1px solid #f0f0f0;
+    overflow: hidden; z-index: 2000;
+  }
+  header.site-header .hdr-mobile-dd.hdr-mobile-open { display: block; }
+
+  /* responsive */
+  @media (max-width: 768px) {
+    header.site-header               { padding: 0 20px; }
+    header.site-header .hdr-right    { display: none; }
+    header.site-header .hdr-mobile   { display: block; }
+
+    /* Make profile dropdown smaller on mobile */
+    header.site-header .hdr-profile-dd {
+      width: 220px;
+      top: calc(100% + 5px);
+    }
+    .hdr-user-card {
+      padding: 14px 12px;
+      gap: 10px;
+    }
+    .hdr-user-card-avatar {
+      width: 38px; height: 38px;
+      font-size: 15px;
+    }
+    .hdr-user-card-name { font-size: 14px; }
+    .hdr-user-card-email { font-size: 11px; }
+    
+    .hdr-login-banner { padding: 15px 12px; }
+    .hdr-login-banner p { font-size: 12px; margin-bottom: 8px; }
+    .hdr-login-btn { padding: 8px 0; font-size: 13px; }
+    
+    .hdr-dd-item { padding: 10px 15px; font-size: 13px; }
+  }
+
+  /* ensure body has space for fixed header */
+  body { padding-top: var(--hdr-height, 80px) !important; }
+</style>
+
+<header class="site-header">
+
+  <!-- Logo -->
+  <a class="hdr-logo" href="/listings">
+    <img src="https://cdn-icons-png.flaticon.com/512/4494/4494642.png" alt="WonderLust Logo" />
+    WonderLust
+  </a>
+
+  <!-- Desktop right -->
+  <div class="hdr-right">
+
+    <!-- Tax toggle -->
+    <label class="hdr-tax">
+      <span>Prices without taxes</span>
+      <div class="form-check form-switch mb-0">
+        <input class="form-check-input" type="checkbox" id="taxToggle" checked style="width:2.5rem;" />
+      </div>
+    </label>
+
+    <!-- Airbnb your home -->
+    <a class="hdr-host-link" href="/listings/new">
+      <i class="fa-solid fa-location-dot"></i>&nbsp; Airbnb your home
+    </a>
+
+    <!-- Profile pill + dropdown -->
+    <div class="hdr-profile-wrap">
+      <button class="hdr-pill" id="hdrProfileBtn" type="button">
+        <i class="fa-solid fa-bars"></i>
+        <% if (currentUser) { %>
+          <div class="hdr-avatar">
+            <%= currentUser.username.charAt(0).toUpperCase() %>
+          </div>
+        <% } else { %>
+          <div class="hdr-avatar hdr-avatar-guest">
+            <i class="fa-solid fa-user" style="font-size:14px;"></i>
+          </div>
+        <% } %>
+      </button>
+
+      <div class="hdr-profile-dd" id="hdrProfileDd">
+
+        <!-- TOP SECTION: user info or login banner -->
+        <% if (currentUser) { %>
+          <!-- Logged-in user card -->
+          <div class="hdr-user-card">
+            <div class="hdr-user-card-avatar">
+              <%= currentUser.username.charAt(0).toUpperCase() %>
+            </div>
+            <div class="hdr-user-card-info">
+              <div class="hdr-user-card-name"><%= currentUser.username %></div>
+              <div class="hdr-user-card-email"><%= currentUser.email %></div>
+            </div>
+          </div>
+        <% } else { %>
+          <!-- Not logged in — prominent login banner -->
+          <div class="hdr-login-banner">
+            <p>Sign in to unlock Favorites,<br/>listings & more.</p>
+            <a class="hdr-login-btn" href="/auth">
+              <i class="fa-solid fa-right-to-bracket"></i>&nbsp; Login / Sign Up
+            </a>
+          </div>
+        <% } %>
+
+        <!-- Menu links -->
+        <div class="hdr-dd-items">
+          <a class="hdr-dd-item" href="/listings">
+            <i class="fa-solid fa-house"></i> Homes
+          </a>
+          <a class="hdr-dd-item" href="/listings">
+            <i class="fa-solid fa-globe"></i> Experiences
+          </a>
+          <a class="hdr-dd-item" href="/user/liked-listings">
+            <i class="fas fa-heart"></i> Favorites
+          </a>
+          <a class="hdr-dd-item" href="/listings/new">
+            <i class="fa-solid fa-location-dot"></i> Airbnb your home
+          </a>
+          <% if (currentUser) { %>
+            <a class="hdr-dd-item hdr-logout" href="/logout">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+          <% } %>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /.hdr-right -->
+
+  <!-- Mobile hamburger -->
+  <div class="hdr-mobile">
+    <button class="hdr-mobile-btn" id="hdrMobileBtn" type="button">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="hdr-mobile-dd" id="hdrMobileDd">
+      <!-- Mobile user info / login -->
+      <% if (currentUser) { %>
+        <div class="hdr-user-card">
+          <div class="hdr-user-card-avatar">
+            <%= currentUser.username.charAt(0).toUpperCase() %>
+          </div>
+          <div class="hdr-user-card-info">
+            <div class="hdr-user-card-name"><%= currentUser.username %></div>
+            <div class="hdr-user-card-email"><%= currentUser.email %></div>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="hdr-login-banner">
+          <p>Sign in to unlock all features.</p>
+          <a class="hdr-login-btn" href="/auth">
+            <i class="fa-solid fa-right-to-bracket"></i>&nbsp; Login / Sign Up
+          </a>
+        </div>
+      <% } %>
+
+      <div class="hdr-dd-items">
+        <a class="hdr-dd-item" href="/listings">
+          <i class="fa-solid fa-house"></i> Homes
+        </a>
+        <a class="hdr-dd-item" href="/listings">
+          <i class="fa-solid fa-globe"></i> Experiences
+        </a>
+        <a class="hdr-dd-item" href="/listings/new">
+          <i class="fa-solid fa-location-dot"></i> Airbnb your home
+        </a>
+        <a class="hdr-dd-item" href="/user/liked-listings">
+          <i class="fas fa-heart"></i> Favorites
+        </a>
+        <% if (currentUser) { %>
+          <a class="hdr-dd-item hdr-logout" href="/logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+</header>
+
+<script>
+(function () {
+  'use strict';
+
+  function initHeader() {
+    var profileBtn = document.getElementById('hdrProfileBtn');
+    var profileDd  = document.getElementById('hdrProfileDd');
+    var mobileBtn  = document.getElementById('hdrMobileBtn');
+    var mobileDd   = document.getElementById('hdrMobileDd');
+
+    function closeAll() {
+      if (profileDd) profileDd.classList.remove('hdr-dd-open');
+      if (mobileDd)  mobileDd.classList.remove('hdr-mobile-open');
+    }
+
+    if (profileBtn && profileDd) {
+      profileBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = profileDd.classList.contains('hdr-dd-open');
+        closeAll();
+        if (!isOpen) profileDd.classList.add('hdr-dd-open');
+      });
+    }
+
+    if (mobileBtn && mobileDd) {
+      mobileBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = mobileDd.classList.contains('hdr-mobile-open');
+        closeAll();
+        if (!isOpen) mobileDd.classList.add('hdr-mobile-open');
+      });
+    }
+
+    /* Close when clicking outside */
+    document.addEventListener('click', closeAll);
+
+    /* Prevent clicks inside dropdowns from closing them */
+    [profileDd, mobileDd].forEach(function (dd) {
+      if (dd) dd.addEventListener('click', function (e) { e.stopPropagation(); });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeader);
+  } else {
+    initHeader();
+  }
+})();
+</script>

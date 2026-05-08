@@ -13,11 +13,11 @@ router.get("/", (req, res) => {
 });
 
 // Auth page that contains both login and signup
+// NOTE: flash messages (error, success, notRegistered) are already set in
+// res.locals by the global middleware in app.js — do NOT call req.flash() again
+// here or it will consume and empty them before EJS can read them.
 router.get("/auth", (req, res) => {
-  res.render("user/auth.ejs", {
-    success: req.flash("success"),
-    error: req.flash("error"),
-  });
+  res.render("user/auth.ejs");
 });
 
 // Keep existing signup route for form submission
@@ -50,19 +50,71 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// Keep existing login routes but update redirects
-router.post(
-  "/login",
-  saveRedirectUrl,
-  passport.authenticate("local", {
-    failureRedirect: "/auth",
-    failureFlash: true,
-  }),
-  async (req, res) => {
-    req.flash("success", `Welcome back, ${req.user.username}!`);
-    res.redirect(res.locals.redirectUrl); // Change to res.locals (with an 's')
+// Login route — Supports Email OR Username login
+router.post("/login", saveRedirectUrl, async (req, res, next) => {
+  const { username, password } = req.body;
+  console.log("--- LOGIN ATTEMPT START ---");
+  console.log("Input provided:", username); // could be email or username
+
+  try {
+    // 1. Manually find user by username OR email first
+    // This allows us to support both and accurately detect "User Not Found"
+    const userRecord = await User.findOne({
+      $or: [{ username: username }, { email: username }],
+    });
+
+    if (!userRecord) {
+      console.log("LOUD LOG: Result -> USER NOT FOUND (checked both username & email)");
+      req.flash(
+        "notRegistered",
+        "No account found with that email/username. Please sign up!"
+      );
+      return req.session.save(() => {
+        res.redirect("/auth?form=signup&reason=notfound");
+      });
+    }
+
+    // 2. User exists, now authenticate using their official username
+    console.log("LOUD LOG: User found in DB. Official username:", userRecord.username);
+    
+    // We pass the official username to passport.authenticate
+    // This is because passport-local-mongoose uses the username field for authentication
+    req.body.username = userRecord.username; 
+
+    passport.authenticate("local", (err, user, info) => {
+      if (err) {
+        console.error("LOUD ERROR: Passport internal error:", err);
+        return next(err);
+      }
+
+      if (!user) {
+        console.log("LOUD LOG: Result -> WRONG PASSWORD.");
+        console.log("Passport Info:", info);
+        req.flash("error", "Incorrect password. Please try again.");
+        return req.session.save(() => {
+          res.redirect("/auth");
+        });
+      }
+
+      console.log("LOUD LOG: Authentication Success! User:", user.username);
+      req.login(user, (loginErr) => {
+        if (loginErr) {
+          console.error("LOUD ERROR: req.login failed:", loginErr);
+          return next(loginErr);
+        }
+        req.flash("success", `Welcome back, ${user.username}! 🎉`);
+        const redirectUrl = res.locals.redirectUrl || "/listings";
+        return req.session.save(() => {
+          res.redirect(redirectUrl);
+        });
+      });
+    })(req, res, next);
+
+  } catch (err) {
+    console.error("LOUD ERROR: Login logic error:", err);
+    return next(err);
   }
-);
+});
 
 // Logout route
 router.get("/logout", (req, res, next) => {

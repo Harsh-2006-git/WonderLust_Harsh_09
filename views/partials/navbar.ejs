@@ -1,0 +1,115 @@
+<header>
+  <a href="/listings" class="logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/4494/4494642.png" alt="WonderLust Logo" />WonderLust
+  </a>
+
+  <div class="d-flex align-items-center">
+    <nav>
+      <div class="menu-item">
+        <a href="/listings/new">
+          <i class="fa-solid fa-house-medical"></i>&nbsp; Airbnb your home
+        </a>
+      </div>
+
+      <div class="profile-section position-relative">
+        <button class="profile-button" id="profileBtn">
+          <div class="menu-icon">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+          <div class="profile-icon">
+            <i class="fa-solid fa-user"></i>
+          </div>
+        </button>
+
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="/listings" class="menu-item">
+            <i class="fa-solid fa-house"></i>&nbsp; Homes
+          </a>
+          <a href="/user/liked-listings" class="menu-item">
+            <i class="fas fa-heart"></i>&nbsp; Favorites
+          </a>
+          <hr class="m-0">
+          <% if(!currentUser) { %>
+            <a href="/auth" class="menu-item">
+              <i class="fa-solid fa-right-to-bracket"></i>&nbsp; Login / Sign Up
+            </a>
+            <% } else { %>
+              <div class="menu-item text-muted small px-3 py-2">
+                Logged in as: <strong>
+                  <%= currentUser.username %>
+                </strong>
+              </div>
+              <a href="/logout" class="menu-item">
+                <i class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout
+              </a>
+              <% } %>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <div class="mobile-dropdown d-md-none">
+      <button class="btn border-0" id="mobileMenuBtn">
+        <i class="fa-solid fa-bars fa-lg"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="container" style="margin-top: 100px;">
+  <div class="search-container">
+    <form action="/advanced-search" method="GET" class="w-100">
+      <div class="row g-2 w-100 m-0">
+        <div class="col-md-8">
+          <input type="text" name="searchText" class="form-control border-0 shadow-none"
+            placeholder="Search by location, title, or description..." />
+        </div>
+        <div class="col-md-2">
+          <select class="form-select border-0 shadow-none" name="country">
+            <option selected value="All Countries">All Countries</option>
+            <option value="india">India</option>
+            <option value="Costa Rica">Costa Rica</option>
+            <option value="United States">USA</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="France">France</option>
+            <option value="Italy">Italy</option>
+            <option value="Japan">Japan</option>
+            <option value="Netherlands">Netherlands</option>
+            <option value="Tanzania">Tanzania</option>
+            <option value="Kingdom">UK London</option>
+            <option value="Indonesia">Indonesia</option>
+            <option value="Greece">Greece</option>
+            <option value="Maldives">Maldives</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary w-100 rounded-pill">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const profileBtn = document.getElementById("profileBtn");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+
+    if (profileBtn && dropdownMenu) {
+      profileBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function () {
+        dropdownMenu.style.display = "none";
+      });
+
+      dropdownMenu.addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
+    }
+  });
+</script>

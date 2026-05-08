@@ -1,0 +1,51 @@
+<div class="categories-container my-3">
+  <div class="categories-scroll d-flex gap-4 overflow-auto pb-2" style="scrollbar-width: none; -ms-overflow-style: none;">
+    <style>
+      .categories-scroll::-webkit-scrollbar { display: none; }
+      .category-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 70px;
+        text-decoration: none;
+        color: #717171;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .category-item:hover { color: #000; border-bottom: 2px solid #ddd; }
+      .category-icon-container { font-size: 1.5rem; margin-bottom: 5px; }
+      .category-name { font-size: 12px; font-weight: 500; }
+    </style>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-umbrella-beach"></i></div><span class="category-name">Beach</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-water"></i></div><span class="category-name">Lake</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-tree"></i></div><span class="category-name">Countryside</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-campground"></i></div><span class="category-name">Camping</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-hotel"></i></div><span class="category-name">Cabin</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-ship"></i></div><span class="category-name">Boat</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-swimming-pool"></i></div><span class="category-name">Pools</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-building"></i></div><span class="category-name">House</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-place-of-worship"></i></div><span class="category-name">Tower</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-mountain"></i></div><span class="category-name">Tree House</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-igloo"></i></div><span class="category-name">Domes</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-crown"></i></div><span class="category-name">Castle</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-skiing"></i></div><span class="category-name">Skiing</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-spa"></i></div><span class="category-name">Spa</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-warehouse"></i></div><span class="category-name">Loft</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-hiking"></i></div><span class="category-name">Hiking</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-bed"></i></div><span class="category-name">Room</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-dungeon"></i></div><span class="category-name">Cave</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-torii-gate"></i></div><span class="category-name">Temple</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-star"></i></div><span class="category-name">Luxury</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-fire"></i></div><span class="category-name">Fireplace</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-paw"></i></div><span class="category-name">Pet Friendly</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-binoculars"></i></div><span class="category-name">Adventure</span></a>
+    <a href="#" class="category-item"><div class="category-icon-container"><i class="fas fa-parachute-box"></i></div><span class="category-name">Skydiving</span></a>
+  </div>
+</div>
+
+<div class="tax-toggle-container d-flex align-items-center justify-content-center my-3 p-3 bg-white rounded-pill shadow-sm" style="width: fit-content; margin: 0 auto;">
+    <span class="me-3 fw-bold">Display total before taxes</span>
+    <div class="form-check form-switch m-0">
+        <input class="form-check-input" type="checkbox" id="taxToggle" style="width: 3rem; height: 1.5rem; cursor: pointer;">
+    </div>
+</div>

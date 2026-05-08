@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const path = require("path");
-
+require("dotenv").config({ path: path.join(__dirname, "../.env") });
 const Listing = require(path.join(__dirname, "../models/listing.js"));
 const initdata = require(path.join(__dirname, "data.js"));
 
-const DB_URL = "mongodb://127.0.0.1:27017/Wonderlust";
+const DB_URL = process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/Wonderlust";
 
 async function initializeDatabase() {
   try {
