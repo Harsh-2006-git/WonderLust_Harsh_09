@@ -533,7 +533,7 @@
         <div class="col-lg-4 col-md-6 mb-4">
           <div class="listing-card position-relative">
             <!-- Edit/Delete Buttons (visible on hover) -->
-            <% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
+            <% if(currentUser && listing.owner && currentUser._id.equals(listing.owner._id || listing.owner)){ %>
             <div class="listing-actions">
               <a
                 href="/listings/<%= listing._id %>/edit"
@@ -557,7 +557,7 @@
             <div class="like-btn-container">
               <a href="/listings/<%= listing._id %>/like" class="like-btn">
                 <i
-                  class="fas fa-heart <%= currentUser.likedListing && currentUser.likedListing.includes(listing._id.toString()) ? 'liked' : '' %>"
+                  class="fas fa-heart <%= (currentUser && currentUser.likedListing && Array.isArray(currentUser.likedListing) && currentUser.likedListing.includes(listing._id.toString())) ? 'liked' : '' %>"
                 ></i>
               </a>
             </div>
