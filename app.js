@@ -102,8 +102,14 @@ app.use((req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error("Global Error Handler:", err);
-  res.status(500).send("Something broke! Check the console for details.");
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  console.error("LOUD ERROR:", err);
+  
+  if (process.env.NODE_ENV === "production") {
+    res.status(statusCode).send("Something broke! Our team has been notified. Please try again later.");
+  } else {
+    res.status(statusCode).render("error", { err }); // Assuming there is an error.ejs, or just send JSON/Text
+  }
 });
 
 // Server Start

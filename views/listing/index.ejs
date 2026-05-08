@@ -565,18 +565,16 @@
             <!-- Wrap image with a link to individual listing page -->
             <a href="/listings/<%= listing._id %>">
               <img
-                src="<%= listing.image.url || listing.image %>"
-                alt="<%= listing.title %>"
+                src="<%= (listing.image && listing.image.url) ? listing.image.url : (typeof listing.image === 'string' ? listing.image : 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') %>"
+                alt="<%= listing.title || 'Listing' %>"
                 class="listing-img"
               />
             </a>
-
-            <!-- Card content with fixed title -->
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-start">
-                <h5 class="card-title"><%= listing.title %></h5>
+                <h5 class="card-title"><%= listing.title || 'Untitled' %></h5>
                 <span class="price-tag"
-                  >₹<%= listing.price.toLocaleString() %></span
+                  >₹<%= (listing.price || 0).toLocaleString() %></span
                 >
               </div>
               <div class="location-info">
