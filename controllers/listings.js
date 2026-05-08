@@ -6,12 +6,15 @@ module.exports = {
   // Index - List all listings
   index: async (req, res) => {
     try {
-      const AllListing = await Listing.find({});
+      console.log("DEBUG: Fetching listings from DB...");
+      const AllListing = await Listing.find({}).populate("owner"); // populate owner for safety checks
+      console.log(`DEBUG: Found ${AllListing.length} listings`);
       res.render("listing/index", { AllListing });
     } catch (err) {
-      console.error("Error fetching listings:", err);
-      req.flash("error", "Error loading listings");
-      res.redirect("/");
+      console.error("LOUD ERROR in Controller:", err);
+      // Don't redirect to / which might redirect back here.
+      // Render with empty array so page loads but shows error.
+      res.render("listing/index", { AllListing: [], error: "Database connection issue. Please check logs." });
     }
   },
 
