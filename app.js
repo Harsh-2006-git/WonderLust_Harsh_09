@@ -28,23 +28,27 @@ const UserRoutes = require("./routes/user");
 const likedListingsRoutes = require("./routes/likedListings");
 
 // Session configuration
-// Session configuration
-const store = MongoStore.create({
-  mongoUrl: LiveURL,
-  touchAfter: 24 * 60 * 60,
-});
+let store;
+if (process.env.DATABASE_URL) {
+  store = MongoStore.create({
+    mongoUrl: LiveURL,
+    touchAfter: 24 * 60 * 60,
+  });
+  store.on("error", (err) => {
+    console.log("LOUD Session Store Error:", err);
+  });
+} else {
+  console.log("⚠️ WARNING: No DATABASE_URL found. Using MemoryStore for sessions.");
+}
 
-store.on("error", (err) => {
-  console.log("Session Store Error:", err);
-});
 const sessionOptions = {
-  store,
-  secret: process.env.SESSION_SECRET || "your-secret-key", // Change this to a secure random string
+  store: store || undefined, // Fallback to memory store
+  secret: process.env.SESSION_SECRET || "your-secret-key",
   resave: false,
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // 1 week
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
 };
