@@ -42,8 +42,35 @@
 
   /* tax label */
   header.site-header .hdr-tax {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 13px; color: var(--hdr-gray); white-space: nowrap;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; color: var(--hdr-black); 
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #fff;
+  }
+  header.site-header .hdr-tax:hover {
+    border-color: var(--hdr-red);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  /* Custom Red Switch */
+  header.site-header .form-check-input:checked {
+    background-color: var(--hdr-red);
+    border-color: var(--hdr-red);
+  }
+  header.site-header .form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 56, 92, 0.25);
+    border-color: var(--hdr-red);
+  }
+  header.site-header .form-check-input {
+    cursor: pointer;
+    height: 1.4rem;
+    width: 2.6rem !important;
   }
 
   /* host link */
@@ -56,6 +83,32 @@
   header.site-header .hdr-host-link:hover {
     background: rgba(255,56,92,0.08); color: var(--hdr-red);
   }
+
+  /* nav links */
+  header.site-header .hdr-nav {
+    display: flex; align-items: center; gap: 4px;
+  }
+  header.site-header .hdr-nav-link {
+    text-decoration: none; color: var(--hdr-black);
+    font-weight: 600; font-size: 14px;
+    padding: 10px 14px; border-radius: 22px;
+    transition: all 0.2s ease; white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+  }
+  header.site-header .hdr-nav-link i { font-size: 14px; opacity: 0.8; }
+  header.site-header .hdr-nav-link:hover {
+    background: rgba(255,56,92,0.08); color: var(--hdr-red);
+  }
+
+  /* mobile navbar icons */
+  .hdr-mobile-nav { display: none; align-items: center; gap: 12px; margin-right: 12px; }
+  .hdr-mobile-nav-link {
+    text-decoration: none; color: var(--hdr-black);
+    font-size: 18px; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; transition: all 0.2s;
+  }
+  .hdr-mobile-nav-link:active { background: #f0f0f0; transform: scale(0.9); }
 
   /* ---- profile pill ---------------------------------------- */
   header.site-header .hdr-profile-wrap { position: relative; }
@@ -88,11 +141,13 @@
     display: none;
     position: absolute;
     top: calc(100% + 10px); right: 0;
-    width: 270px;
+    min-width: 250px;
+    width: auto;
+    max-width: 320px;
     background: var(--hdr-white);
-    border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.16);
-    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    border: 1px solid #eeeeee;
     overflow: hidden;
     z-index: 2000;
   }
@@ -101,53 +156,57 @@
   /* --- logged-in user card (top of dropdown) --- */
   .hdr-user-card {
     display: flex; align-items: center; gap: 12px;
-    padding: 18px 18px 14px;
+    padding: 12px 15px;
     background: linear-gradient(135deg, #fff5f7, #ffffff);
     border-bottom: 1px solid #f0f0f0;
   }
   .hdr-user-card-avatar {
-    width: 46px; height: 46px;
+    width: 36px; height: 36px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--hdr-red), #e61e4d);
     display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 18px; font-weight: 700;
+    color: white; font-size: 14px; font-weight: 700;
     flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(255,56,92,0.35);
+    box-shadow: 0 2px 6px rgba(255,56,92,0.2);
   }
-  .hdr-user-card-info { overflow: hidden; }
+  .hdr-user-card-info { overflow: hidden; flex: 1; }
   .hdr-user-card-name {
-    font-weight: 700; font-size: 15px;
+    font-weight: 700; font-size: 14px;
     color: var(--hdr-black);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .hdr-user-card-email {
-    font-size: 12px; color: var(--hdr-gray);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    margin-top: 2px;
+    font-size: 11px; color: var(--hdr-gray);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 1px;
   }
 
   /* --- NOT logged in — login banner at top of dropdown --- */
   .hdr-login-banner {
-    padding: 20px 18px 16px;
+    padding: 15px;
     background: linear-gradient(135deg, #fff5f7, #fff);
     border-bottom: 1px solid #f0f0f0;
     text-align: center;
   }
   .hdr-login-banner p {
-    font-size: 13px; color: var(--hdr-gray);
-    margin: 0 0 12px;
+    font-size: 12px; color: var(--hdr-gray);
+    margin: 0 0 10px;
     line-height: 1.4;
   }
   .hdr-login-btn {
     display: block;
     width: 100%;
-    padding: 11px 0;
+    padding: 9px 0;
     background: var(--hdr-red);
     color: white;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 8px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     text-decoration: none;
     transition: background 0.2s ease, transform 0.1s ease;
     box-shadow: 0 3px 12px rgba(255,56,92,0.3);
@@ -162,9 +221,9 @@
   .hdr-dd-items { padding: 6px 0; }
 
   header.site-header .hdr-dd-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 18px;
-    font-size: 14px; color: var(--hdr-black);
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 15px;
+    font-size: 13px; color: var(--hdr-black);
     text-decoration: none;
     transition: background 0.15s ease;
   }
@@ -196,11 +255,11 @@
   header.site-header .hdr-mobile-dd {
     display: none;
     position: absolute; top: calc(100% + 8px); right: 0;
-    width: 240px;
+    width: 220px;
     background: var(--hdr-white);
-    border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.16);
-    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    border: 1px solid #eeeeee;
     overflow: hidden; z-index: 2000;
   }
   header.site-header .hdr-mobile-dd.hdr-mobile-open { display: block; }
@@ -213,8 +272,28 @@
 
     /* Make profile dropdown smaller on mobile */
     header.site-header .hdr-profile-dd {
-      width: 220px;
-      top: calc(100% + 5px);
+      min-width: 240px;
+      width: auto;
+      max-width: 300px;
+    }
+    .hdr-user-card-email { 
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 160px;
+    }
+    header.site-header .hdr-pill {
+      padding: 2px 8px 2px 2px;
+      gap: 5px;
+      font-size: 14px;
+    }
+    header.site-header .hdr-avatar {
+      width: 32px; height: 32px;
+      font-size: 14px;
+    }
+    header.site-header .hdr-avatar-guest {
+      width: 32px; height: 32px;
     }
     .hdr-user-card {
       padding: 14px 12px;
@@ -231,7 +310,26 @@
     .hdr-login-banner p { font-size: 12px; margin-bottom: 8px; }
     .hdr-login-btn { padding: 8px 0; font-size: 13px; }
     
-    .hdr-dd-item { padding: 10px 15px; font-size: 13px; }
+    /* compact navlinks on mobile */
+    header.site-header .hdr-dd-item {
+      padding: 7px 12px;
+      gap: 8px;
+      font-size: 13px;
+    }
+    .hdr-dd-items { padding: 4px 0; }
+    
+    /* mobile nav */
+    header.site-header .hdr-mobile { display: flex; align-items: center; }
+    .hdr-mobile-nav { display: flex; }
+
+    /* Smaller logo and text on mobile */
+    header.site-header .hdr-logo {
+      font-size: 1.25rem;
+      gap: 6px;
+    }
+    header.site-header .hdr-logo img {
+      height: 38px;
+    }
   }
 
   /* ensure body has space for fixed header */
@@ -249,6 +347,21 @@
   <!-- Desktop right -->
   <div class="hdr-right">
 
+    <!-- Nav Links -->
+    <div class="hdr-nav">
+      <a href="/listings" class="hdr-nav-link">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <a href="/user/liked" class="hdr-nav-link">
+        <i class="fas fa-heart"></i> Liked
+      </a>
+    </div>
+
+    <!-- Airbnb your home -->
+    <a class="hdr-host-link" href="/listings/new">
+      <i class="fa-solid fa-location-dot"></i>&nbsp; Airbnb your home
+    </a>
+
     <!-- Tax toggle -->
     <label class="hdr-tax">
       <span>Prices without taxes</span>
@@ -256,11 +369,6 @@
         <input class="form-check-input" type="checkbox" id="taxToggle" checked style="width:2.5rem;" />
       </div>
     </label>
-
-    <!-- Airbnb your home -->
-    <a class="hdr-host-link" href="/listings/new">
-      <i class="fa-solid fa-location-dot"></i>&nbsp; Airbnb your home
-    </a>
 
     <!-- Profile pill + dropdown -->
     <div class="hdr-profile-wrap">
@@ -306,11 +414,11 @@
           <a class="hdr-dd-item" href="/listings">
             <i class="fa-solid fa-house"></i> Homes
           </a>
-          <a class="hdr-dd-item" href="/listings">
-            <i class="fa-solid fa-globe"></i> Experiences
+          <a class="hdr-dd-item" href="/mybookings">
+            <i class="fa-solid fa-suitcase"></i> My Bookings
           </a>
-          <a class="hdr-dd-item" href="/user/liked-listings">
-            <i class="fas fa-heart"></i> Favorites
+          <a class="hdr-dd-item" href="/user/liked">
+            <i class="fa-solid fa-heart"></i> Favorites
           </a>
           <a class="hdr-dd-item" href="/listings/new">
             <i class="fa-solid fa-location-dot"></i> Airbnb your home
@@ -327,13 +435,26 @@
 
   </div><!-- /.hdr-right -->
 
-  <!-- Mobile hamburger -->
+  <!-- Mobile hamburger/profile -->
   <div class="hdr-mobile">
-    <button class="hdr-mobile-btn" id="hdrMobileBtn" type="button">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="hdr-profile-wrap">
+      <button class="hdr-pill" id="hdrMobileBtn" type="button">
+        <% if (currentUser) { %>
+          <div class="hdr-avatar me-2">
+            <%= (currentUser.username && currentUser.username.length > 0) ? currentUser.username.charAt(0).toUpperCase() : 'U' %>
+          </div>
+          <span class="small fw-bold"><%= currentUser.username.split(' ')[0] %></span>
+          <i class="fa-solid fa-chevron-down ms-2" id="hdrMobileChevron" style="font-size: 10px;"></i>
+        <% } else { %>
+          <div class="hdr-avatar hdr-avatar-guest me-2">
+            <i class="fa-solid fa-user" style="font-size:14px;"></i>
+          </div>
+          <span class="small fw-bold">Login</span>
+          <i class="fa-solid fa-chevron-down ms-2" style="font-size: 10px;"></i>
+        <% } %>
+      </button>
 
-    <div class="hdr-mobile-dd" id="hdrMobileDd">
+      <div class="hdr-mobile-dd" id="hdrMobileDd">
       <!-- Mobile user info / login -->
       <% if (currentUser) { %>
         <div class="hdr-user-card">
@@ -358,14 +479,14 @@
         <a class="hdr-dd-item" href="/listings">
           <i class="fa-solid fa-house"></i> Homes
         </a>
-        <a class="hdr-dd-item" href="/listings">
-          <i class="fa-solid fa-globe"></i> Experiences
+        <a class="hdr-dd-item" href="/mybookings">
+          <i class="fa-solid fa-suitcase"></i> My Bookings
+        </a>
+        <a class="hdr-dd-item" href="/user/liked">
+          <i class="fa-solid fa-heart"></i> Favorites
         </a>
         <a class="hdr-dd-item" href="/listings/new">
           <i class="fa-solid fa-location-dot"></i> Airbnb your home
-        </a>
-        <a class="hdr-dd-item" href="/user/liked-listings">
-          <i class="fas fa-heart"></i> Favorites
         </a>
         <% if (currentUser) { %>
           <a class="hdr-dd-item hdr-logout" href="/logout">
@@ -391,6 +512,11 @@
     function closeAll() {
       if (profileDd) profileDd.classList.remove('hdr-dd-open');
       if (mobileDd)  mobileDd.classList.remove('hdr-mobile-open');
+      var chevron = document.getElementById('hdrMobileChevron');
+      if (chevron) {
+        chevron.classList.remove('fa-chevron-up');
+        chevron.classList.add('fa-chevron-down');
+      }
     }
 
     if (profileBtn && profileDd) {
@@ -407,7 +533,20 @@
         e.stopPropagation();
         var isOpen = mobileDd.classList.contains('hdr-mobile-open');
         closeAll();
-        if (!isOpen) mobileDd.classList.add('hdr-mobile-open');
+        
+        var chevron = document.getElementById('hdrMobileChevron');
+        if (!isOpen) {
+          mobileDd.classList.add('hdr-mobile-open');
+          if(chevron) {
+            chevron.classList.remove('fa-chevron-down');
+            chevron.classList.add('fa-chevron-up');
+          }
+        } else {
+          if(chevron) {
+            chevron.classList.remove('fa-chevron-up');
+            chevron.classList.add('fa-chevron-down');
+          }
+        }
       });
     }
 

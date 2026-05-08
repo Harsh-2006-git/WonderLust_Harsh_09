@@ -27,26 +27,6 @@
         Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      padding: 20px;
-      color: var(--dark);
-    }
-
-    .container {
-      position: relative;
-      width: 100%;
-      max-width: 500px;
-      background: var(--white);
-      box-shadow: var(--shadow);
-      border-radius: 15px;
-      overflow: hidden;
-      transition: var(--transition);
-    }
 
     .header {
       background: var(--primary);
@@ -141,25 +121,24 @@
       box-shadow: 0 5px 15px rgba(255, 75, 75, 0.1);
     }
 
-    input[type="submit"] {
-      width: 100%;
-      background: var(--primary);
-      color: var(--white);
-      padding: 12px;
-      font-weight: 500;
-      letter-spacing: 1px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: var(--transition);
-    }
+      input[type="submit"] {
+        width: 100%;
+        padding: 16px;
+        background: #ff385c;
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
 
-    input[type="submit"]:hover {
-      background: var(--primary-light);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 75, 75, 0.3);
-    }
+      input[type="submit"]:hover {
+        background: #e61e4d;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(255, 56, 92, 0.2);
+      }
 
     .options {
       display: flex;
@@ -372,19 +351,51 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: background 0.2s ease, transform 0.1s ease;
+      transition: all 0.2s ease;
     }
+
     .nr-toast-btn:hover {
       background: #e61e4d;
       transform: translateY(-1px);
     }
 
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f8fafc;
+      color: #334155;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .auth-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      background: #ffffff;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      border-radius: 30px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      border: none;
+    }
+
     /* Desktop styles */
     @media (min-width: 769px) {
       .container {
-        width: 900px;
-        max-width: 900px;
-        height: 550px;
+        height: 560px;
+        display: flex !important;
+        flex-direction: row;
       }
 
       .mobile-only {
@@ -393,281 +404,368 @@
 
       .desktop-view {
         display: flex;
+        width: 100%;
         height: 100%;
       }
 
       .left-panel {
-        width: 50%;
-        background: var(--primary);
+        width: 45%;
+        background: linear-gradient(135deg, rgba(255, 56, 92, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%), url('/uploads/auth-bg.png');
+        background-size: cover;
+        background-position: center;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        padding: 35px;
+        color: #ffffff;
+        position: relative;
+      }
+
+      .left-panel .logo-area {
+        display: flex;
         align-items: center;
-        color: white;
-        padding: 40px;
-        text-align: center;
+        gap: 8px;
+        margin-bottom: 40px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+      .left-panel .logo-area i {
+        font-size: 20px;
+        background: #ff385c;
+        color: #ffffff;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      }
+
+      .left-panel .logo-area span {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #ffffff;
       }
 
       .left-panel h2 {
-        font-size: 28px;
+        font-size: 32px;
+        font-weight: 800;
         margin-bottom: 15px;
+        letter-spacing: -1px;
+        line-height: 1.1;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.4);
       }
 
-      .left-panel p {
-        margin-bottom: 30px;
+      .left-panel h2 span.highlight {
+        color: #ff385c;
+        text-shadow: 0 0 20px rgba(255, 56, 92, 0.4);
+      }
+
+      .left-panel p.intro-text {
+        margin-bottom: 35px;
         font-size: 14px;
-        line-height: 1.6;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.95);
+        max-width: 300px;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.3);
       }
 
-      .left-panel .btn {
-        display: inline-block;
-        padding: 12px 35px;
-        background: transparent;
-        border: 2px solid var(--white);
-        color: var(--white);
-        text-decoration: none;
-        border-radius: 30px;
-        font-weight: 500;
-        transition: var(--transition);
-        text-transform: uppercase;
-        font-size: 12px;
-        letter-spacing: 1px;
+      .features-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
       }
 
-      .left-panel .btn:hover {
-        background: var(--white);
-        color: var(--primary);
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      }
+
+      .feature-icon {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(8px);
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+
+      .feature-text h4 {
+        font-size: 14px;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .feature-text p {
+        font-size: 11px;
+        margin: 0;
+        opacity: 0.8;
       }
 
       .right-panel {
-        width: 50%;
-        padding: 50px;
+        width: 55%;
+        background: #ffffff;
+        padding: 40px 60px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        align-items: center;
+        position: relative;
+      }
+
+      .form-header {
+        margin-bottom: 25px;
+      }
+
+      .form-header h1 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 8px;
+      }
+
+      .form-header p {
+        color: #64748b;
+        font-size: 15px;
+        font-weight: 400;
       }
 
       .form-container {
         width: 100%;
-        max-width: 350px;
+      }
+
+      .input-wrapper label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: #475569;
+        margin-bottom: 10px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        background: #f8fafc;
         padding: 0;
       }
 
+      .container {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+        display: flex;
+        flex-direction: column;
+        background: #f8fafc;
+      }
+
+      .mobile-only {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .desktop-view {
+        display: none;
+      }
+
+      .mobile-hero {
+        width: 100%;
+        height: 180px;
+        background: linear-gradient(rgba(255, 56, 92, 0.5), rgba(0, 0, 0, 0.7)), url('/uploads/auth-bg.png');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        color: #ffffff;
+        text-align: center;
+      }
+
+      .mobile-hero h1 {
+        font-size: 22px;
+        font-weight: 800;
+        margin-bottom: 5px;
+      }
+
+      .mobile-hero p {
+        font-size: 13px;
+        opacity: 0.9;
+        max-width: 250px;
+        margin: 0 auto;
+      }
+
       .tab-container {
-        display: none;
-      }
-    }
-
-    /* Mobile view styles - Hide desktop view on mobile */
-    @media (max-width: 768px) {
-      .desktop-view {
-        display: none;
+        display: flex;
+        margin: 20px 20px 25px;
+        background: #ffffff;
+        padding: 5px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
       }
 
-      .mobile-only {
-        display: block;
+      .mobile-features {
+        padding: 20px 5px;
+        background: #ffffff;
+        border-top: 1px solid #e2e8f0;
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-evenly;
+        gap: 5px;
       }
-    }
 
-    @media (max-width: 768px) {
-      .desktop-view {
-        display: none;
+      .mobile-feature-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 5px;
       }
 
-      .mobile-only {
-        display: block;
+      .mobile-feature-icon {
+        background: #fff1f2;
+        color: #ff385c;
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
       }
-    }
 
-    .container {
-      width: 90%;
-      height: 550px;
-    }
+      .mobile-feature-text h4 {
+        font-size: 10px;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0;
+      }
 
-    .mera {
-      text-align: center;
-      background-color: var(--primary);
-      margin: 0.75rem;
-      color: white;
-      border-radius: 50px;
+      .mobile-feature-text p {
+        font-size: 8px;
+        color: #64748b;
+        margin: 0;
+        line-height: 1.1;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #64748b;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        border: none !important;
+      }
+
+      .tab.active {
+        background: #ffffff;
+        color: #ff385c;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      .form-container {
+        padding: 0 25px 40px;
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .input-group {
+        background: #f8fafc;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 12px;
+        margin-bottom: 18px;
+        height: 54px;
+      }
+
+      .input-group input {
+        padding: 0 15px 0 45px !important;
+        height: 100%;
+        font-size: 15px;
+      }
+
+      .input-group i {
+        left: 15px !important;
+        font-size: 16px;
+      }
+
+      input[type="submit"] {
+        height: 54px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 12px;
+        margin-top: 10px;
+      }
+
+      .options {
+        margin: 15px 0 25px;
+        font-weight: 500;
+        color: #64748b;
+      }
+
+      .remember label {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Not-Registered Toast (shown when ?reason=notfound) -->
-  <div class="nr-toast-overlay" id="nrToastOverlay">
-    <div class="nr-toast">
-      <div class="nr-toast-icon">🔍</div>
-      <h3>Account Not Found</h3>
-      <p>
-        We couldn't find an account with that username.<br/>
-        <strong>Redirecting you to Sign Up</strong> so you can create one!
-      </p>
-      <div class="nr-bar-wrap"><div class="nr-bar" id="nrBar"></div></div>
-      <p class="nr-toast-counter" id="nrCounter">Redirecting in <strong>3</strong>s…</p>
-      <button class="nr-toast-btn" onclick="goToSignup()">Sign Up Now →</button>
+  <div class="auth-wrapper">
+    <!-- Not-Registered Toast (shown when ?reason=notfound) -->
+    <div class="nr-toast-overlay" id="nrToastOverlay">
+      <div class="nr-toast">
+        <div class="nr-toast-icon">🔍</div>
+        <h3>Account Not Found</h3>
+        <p>
+          We couldn't find an account with that username.<br/>
+          <strong>Redirecting you to Sign Up</strong> so you can create one!
+        </p>
+        <div class="nr-bar-wrap"><div class="nr-bar" id="nrBar"></div></div>
+        <p class="nr-toast-counter" id="nrCounter">Redirecting in <strong>3</strong>s…</p>
+        <button class="nr-toast-btn" onclick="goToSignup()">Sign Up Now →</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Global Flash Overlay (Backup display) -->
-  <div style="position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:10000; width:90%; max-width:500px;">
-    <% if(typeof success !== 'undefined' && success && success.length > 0) { %>
-      <div class="alert alert-success" style="box-shadow:0 4px 12px rgba(0,0,0,0.15);">
-        <i class="fas fa-check-circle"></i> <%= success %>
-      </div>
-    <% } %>
-    <% if(typeof error !== 'undefined' && error && error.length > 0) { %>
-      <div class="alert alert-danger" style="box-shadow:0 4px 12px rgba(0,0,0,0.15);">
-        <i class="fas fa-exclamation-circle"></i> <%= error %>
-      </div>
-    <% } %>
-  </div>
-
-  <div class="container" id="container">
-      <!-- Mobile View -->
-      <div class="mobile-only">
-        <div class="mera">
-          <h1>WonderLust</h1>
+    <!-- Global Flash Overlay (Backup display) -->
+    <div style="position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:10000; width:90%; max-width:500px;">
+      <% if(typeof success !== 'undefined' && success && success.length > 0) { %>
+        <div class="alert alert-success" style="box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+          <i class="fas fa-check-circle"></i> <%= success %>
         </div>
-
-        <div class="tab-container">
-          <div class="tab active" id="loginTab">Sign In</div>
-          <div class="tab" id="signupTab">Sign Up</div>
+      <% } %>
+      <% if(typeof error !== 'undefined' && error && error.length > 0) { %>
+        <div class="alert alert-danger" style="box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+          <i class="fas fa-exclamation-circle"></i> <%= error %>
         </div>
+      <% } %>
+    </div>
 
-        <div class="form-container">
-          <!-- Login Form -->
-          <div class="form-box active" id="loginForm">
-            <form action="/login" method="POST">
-              <% if(typeof success !== 'undefined' && success && success.length > 0) { %>
-                <div class="alert alert-success">
-                  <i class="fas fa-check-circle"></i>
-                  <%= success %>
-                </div>
-              <% } %>
-              <% if(typeof error !== 'undefined' && error && error.length > 0) { %>
-                <div class="alert alert-danger">
-                  <i class="fas fa-exclamation-circle"></i>
-                  <%= error %>
-                </div>
-              <% } %>
-
-                      <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="username" placeholder="Email or Username" required />
-                      </div>
-
-                      <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="password" id="loginPassword" placeholder="Password" required />
-                        <span class="password-toggle" onclick="togglePassword('loginPassword')">
-                          <i class="fas fa-eye"></i>
-                        </span>
-                      </div>
-
-                      <div class="options">
-                        <div class="remember">
-                          <input type="checkbox" id="remember" name="remember" />
-                          <label for="remember">Remember me</label>
-                        </div>
-                        <a href="#">Forgot password?</a>
-                      </div>
-
-                      <input type="submit" value="Login" />
-
-                      <div class="social-login">
-                        <p>Or sign in with</p>
-                        <div class="social-icons">
-                          <a href="#"><i class="fab fa-google"></i></a>
-                          <a href="#"><i class="fab fa-facebook-f"></i></a>
-                          <a href="#"><i class="fab fa-twitter"></i></a>
-                        </div>
-                      </div>
-            </form>
+    <div class="container" id="container">
+        <!-- Mobile View -->
+        <div class="mobile-only">
+          <div class="mobile-hero">
+            <h1>WonderLust</h1>
+            <p>Explore. Stay. Relax. Your journey starts here.</p>
           </div>
 
-          <!-- Signup Form -->
-          <div class="form-box" id="signupForm">
-            <form action="/signup" method="POST">
-              <% if(locals.success && success.length) { %>
-                <div class="alert alert-success">
-                  <i class="fas fa-check-circle"></i>
-                  <%= success %>
-                </div>
-                <% } %>
-                  <% if(locals.notRegistered && notRegistered.length) { %>
-                    <div class="alert" style="background:#fff8e1;color:#7c5c00;border-left:4px solid #f59e0b;">
-                      <i class="fas fa-user-plus"></i>
-                      <%= notRegistered %>
-                    </div>
-                  <% } %>
-                  <% if(locals.error && error.length) { %>
-                    <div class="alert alert-danger">
-                      <i class="fas fa-exclamation-circle"></i>
-                      <%= error %>
-                    </div>
-                    <% } %>
-
-                      <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input type="text" name="username" placeholder="Username" required />
-                      </div>
-
-                      <div class="input-group">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" name="email" placeholder="Email Address" required />
-                      </div>
-
-                      <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="password" id="signupPassword" placeholder="Password" required />
-                        <span class="password-toggle" onclick="togglePassword('signupPassword')">
-                          <i class="fas fa-eye"></i>
-                        </span>
-                      </div>
-
-                      <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="confirmPassword" id="confirmPassword"
-                          placeholder="Confirm Password" required />
-                        <span class="password-toggle" onclick="togglePassword('confirmPassword')">
-                          <i class="fas fa-eye"></i>
-                        </span>
-                      </div>
-
-                      <input type="submit" value="Register" />
-
-                      <div class="social-login">
-                        <p>Or sign up with</p>
-                        <div class="social-icons">
-                          <a href="#"><i class="fab fa-google"></i></a>
-                          <a href="#"><i class="fab fa-facebook-f"></i></a>
-                          <a href="#"><i class="fab fa-twitter"></i></a>
-                        </div>
-                      </div>
-            </form>
+          <div class="tab-container">
+            <div class="tab active" id="loginTab">Sign In</div>
+            <div class="tab" id="signupTab">Sign Up</div>
           </div>
-        </div>
-      </div>
 
-      <!-- Desktop View (Original Sliding Design) -->
-      <div class="desktop-view">
-        <!-- Login Section -->
-        <div class="left-panel" id="leftPanel">
-          <h2 class="floating">Hello, Traveler's!</h2>
-          <p>🌅 Good to see you again! Any dream destinations? 🌴</p>
-          <a href="#" class="btn" id="desktopSignupBtn">SIGN UP</a>
-        </div>
-
-        <div class="right-panel" id="rightPanel">
           <div class="form-container">
             <!-- Login Form -->
-            <div class="form-box active" id="desktopLoginForm">
-              <h2 style="font-size: 24px; text-align: center; margin-bottom: 25px">
-                Sign In
-              </h2>
+            <div class="form-box active" id="loginForm">
               <form action="/login" method="POST">
                 <% if(typeof success !== 'undefined' && success && success.length > 0) { %>
                   <div class="alert alert-success">
@@ -689,39 +787,25 @@
 
                         <div class="input-group">
                           <i class="fas fa-lock"></i>
-                          <input type="password" name="password" id="desktopLoginPassword" placeholder="Password"
-                            required />
-                          <span class="password-toggle" onclick="togglePassword('desktopLoginPassword')">
+                          <input type="password" name="password" id="loginPassword" placeholder="Password" required />
+                          <span class="password-toggle" onclick="togglePassword('loginPassword')">
                             <i class="fas fa-eye"></i>
                           </span>
                         </div>
 
                         <div class="options">
                           <div class="remember">
-                            <input type="checkbox" id="desktopRemember" name="remember" />
-                            <label for="desktopRemember">Remember me</label>
-                          </div>
-                          <a href="#">Forgot password?</a>
-                        </div>
-
-                        <input type="submit" value="Login" />
-
-                        <div class="social-login">
-                          <p>Or sign in with</p>
-                          <div class="social-icons">
-                            <a href="#"><i class="fab fa-google"></i></a>
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <input type="checkbox" id="remember" name="remember" />
+                            <label for="remember">Remember me</label>
                           </div>
                         </div>
+
+                        <input type="submit" value="Log In" />
               </form>
             </div>
 
             <!-- Signup Form -->
-            <div class="form-box" id="desktopSignupForm">
-              <h2 style="font-size: 24px; text-align: center; margin-bottom: 25px">
-                Create an Account
-              </h2>
+            <div class="form-box" id="signupForm">
               <form action="/signup" method="POST">
                 <% if(locals.success && success.length) { %>
                   <div class="alert alert-success">
@@ -729,18 +813,18 @@
                     <%= success %>
                   </div>
                   <% } %>
-                    <% if(typeof notRegistered !== 'undefined' && notRegistered && notRegistered.length > 0) { %>
+                    <% if(locals.notRegistered && notRegistered.length) { %>
                       <div class="alert" style="background:#fff8e1;color:#7c5c00;border-left:4px solid #f59e0b;">
                         <i class="fas fa-user-plus"></i>
                         <%= notRegistered %>
                       </div>
                     <% } %>
-                    <% if(typeof error !== 'undefined' && error && error.length > 0) { %>
+                    <% if(locals.error && error.length) { %>
                       <div class="alert alert-danger">
                         <i class="fas fa-exclamation-circle"></i>
                         <%= error %>
                       </div>
-                    <% } %>
+                      <% } %>
 
                         <div class="input-group">
                           <i class="fas fa-user"></i>
@@ -754,37 +838,191 @@
 
                         <div class="input-group">
                           <i class="fas fa-lock"></i>
-                          <input type="password" name="password" id="desktopSignupPassword" placeholder="Password"
-                            required />
-                          <span class="password-toggle" onclick="togglePassword('desktopSignupPassword')">
+                          <input type="password" name="password" id="signupPassword" placeholder="Password" required />
+                          <span class="password-toggle" onclick="togglePassword('signupPassword')">
                             <i class="fas fa-eye"></i>
                           </span>
                         </div>
 
                         <div class="input-group">
                           <i class="fas fa-lock"></i>
-                          <input type="password" name="confirmPassword" id="desktopConfirmPassword"
+                          <input type="password" name="confirmPassword" id="confirmPassword"
                             placeholder="Confirm Password" required />
-                          <span class="password-toggle" onclick="togglePassword('desktopConfirmPassword')">
+                          <span class="password-toggle" onclick="togglePassword('confirmPassword')">
                             <i class="fas fa-eye"></i>
                           </span>
                         </div>
 
-                        <input type="submit" value="Register" />
-
-                        <div class="social-login">
-                          <p>Or sign up with</p>
-                          <div class="social-icons">
-                            <a href="#"><i class="fab fa-google"></i></a>
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                          </div>
-                        </div>
+                        <input type="submit" value="Create Account" />
               </form>
             </div>
           </div>
+
+          <!-- Mobile Features at the end -->
+          <div class="mobile-features">
+            <div class="mobile-feature-item">
+              <div class="mobile-feature-icon"><i class="fas fa-hotel"></i></div>
+              <div class="mobile-feature-text">
+                <h4>Handpicked Stays</h4>
+                <p>Best locations</p>
+              </div>
+            </div>
+            <div class="mobile-feature-item">
+              <div class="mobile-feature-icon"><i class="fas fa-map-marked-alt"></i></div>
+              <div class="mobile-feature-text">
+                <h4>Top Destinations</h4>
+                <p>Explore world</p>
+              </div>
+            </div>
+            <div class="mobile-feature-item">
+              <div class="mobile-feature-icon"><i class="fas fa-shield-alt"></i></div>
+              <div class="mobile-feature-text">
+                <h4>Secure & Trusted</h4>
+                <p>Data safe</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <!-- Desktop View -->
+        <div class="desktop-view">
+          <!-- Left Panel -->
+          <div class="left-panel">
+            <div class="logo-area">
+              <i class="fas fa-mountain-sun"></i>
+              <span>WonderLust</span>
+            </div>
+
+            <h2>Welcome Back!<br>Explore. Stay. <span class="highlight">Relax.</span></h2>
+            <p class="intro-text">Login to your account and continue your journey to amazing destinations.</p>
+
+            <div class="features-list">
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-bed"></i></div>
+                <div class="feature-text">
+                  <h4>Handpicked Stays</h4>
+                  <p>Comfortable stays at the best locations</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-location-dot"></i></div>
+                <div class="feature-text">
+                  <h4>Top Destinations</h4>
+                  <p>Explore popular destinations around the world</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+                <div class="feature-text">
+                  <h4>Secure & Trusted</h4>
+                  <p>Your data is safe with us</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Panel -->
+          <div class="right-panel">
+            <div class="form-container">
+              <!-- Desktop Login -->
+              <div class="form-box active" id="desktopLoginForm">
+                <div class="form-header">
+                  <h1>Log In</h1>
+                  <p>Glad to see you again! 👋</p>
+                </div>
+                <form action="/login" method="POST">
+                  <% if(typeof success !== 'undefined' && success && success.length > 0) { %>
+                    <div class="alert alert-success">
+                      <i class="fas fa-check-circle"></i> <%= success %>
+                    </div>
+                  <% } %>
+                  <% if(typeof error !== 'undefined' && error && error.length > 0) { %>
+                    <div class="alert alert-danger">
+                      <i class="fas fa-exclamation-circle"></i> <%= error %>
+                    </div>
+                  <% } %>
+
+                  <div class="input-wrapper">
+                    <label>Email Address</label>
+                    <div class="input-group">
+                      <i class="fas fa-envelope main-icon"></i>
+                      <input type="text" name="username" placeholder="Email or Username" required />
+                    </div>
+                  </div>
+
+                  <div class="input-wrapper">
+                    <label>Password</label>
+                    <div class="input-group">
+                      <i class="fas fa-lock main-icon"></i>
+                      <input type="password" name="password" id="desktopLoginPassword" placeholder="••••••••" required />
+                      <span class="password-toggle" onclick="togglePassword('desktopLoginPassword')">
+                        <i class="fas fa-eye"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="form-options">
+                    <div class="remember-me">
+                      <input type="checkbox" id="d-remember" name="remember" />
+                      <label for="d-remember">Remember me</label>
+                    </div>
+                  </div>
+
+                  <input type="submit" value="Log In" />
+
+                  <div class="form-footer" style="margin-top: 30px;">
+                    Don't have an account? <a href="#" id="showSignupBtn" style="color: #ff385c; font-weight: 700;">Sign up</a>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Desktop Signup -->
+              <div class="form-box" id="desktopSignupForm">
+                <div class="form-header">
+                  <h1>Create Account</h1>
+                  <p>Join the WonderLust community today! 🌍</p>
+                </div>
+                <form action="/signup" method="POST">
+                  <div class="input-wrapper">
+                    <label>Username</label>
+                    <div class="input-group">
+                      <i class="fas fa-user main-icon"></i>
+                      <input type="text" name="username" placeholder="Choose a username" required />
+                    </div>
+                  </div>
+
+                  <div class="input-wrapper">
+                    <label>Email Address</label>
+                    <div class="input-group">
+                      <i class="fas fa-envelope main-icon"></i>
+                      <input type="email" name="email" placeholder="Enter your email" required />
+                    </div>
+                  </div>
+
+                  <div class="input-wrapper">
+                    <label>Password</label>
+                    <div class="input-group">
+                      <i class="fas fa-lock main-icon"></i>
+                      <input type="password" name="password" id="desktopSignupPassword" placeholder="Create a password" required />
+                      <span class="password-toggle" onclick="togglePassword('desktopSignupPassword')">
+                        <i class="fas fa-eye"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                  <input type="submit" value="Create Account" />
+
+                  <div class="form-footer" style="margin-top: 30px;">
+                    Already have an account? <a href="#" id="showLoginBtn" style="color: #ff385c; font-weight: 700;">Log in</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
   </div>
 
   <script>
@@ -808,52 +1046,38 @@
       loginForm.classList.remove("active");
     });
 
-    // Desktop switching
-    const desktopSignupBtn = document.getElementById("desktopSignupBtn");
+    // Desktop Switching Logic
+    const showSignupBtn = document.getElementById("showSignupBtn");
+    const showLoginBtn = document.getElementById("showLoginBtn");
     const desktopLoginForm = document.getElementById("desktopLoginForm");
     const desktopSignupForm = document.getElementById("desktopSignupForm");
-    const leftPanel = document.getElementById("leftPanel");
 
-    desktopSignupBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      desktopLoginForm.classList.remove("active");
-      desktopSignupForm.classList.add("active");
-      leftPanel.innerHTML = `
-          <h2 class="floating">Welcome Back!</h2>
-          <p>To keep connected with us please login with your personal info</p>
-          <a href="#" class="btn" id="desktopLoginBtn">SIGN IN</a>
-        `;
+    if (showSignupBtn) {
+      showSignupBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        desktopLoginForm.classList.remove("active");
+        desktopSignupForm.classList.add("active");
+      });
+    }
 
-      // Add event listener to the new login button
-      document
-        .getElementById("desktopLoginBtn")
-        .addEventListener("click", (e) => {
-          e.preventDefault();
-          desktopSignupForm.classList.remove("active");
-          desktopLoginForm.classList.add("active");
-          leftPanel.innerHTML = `
-            <h2 class="floating">Hello, Friend!</h2>
-            <p>Enter your personal details and start journey with us</p>
-            <a href="#" class="btn" id="desktopSignupBtn">SIGN UP</a>
-          `;
-
-          // Reattach event listener
-          document
-            .getElementById("desktopSignupBtn")
-            .addEventListener("click", desktopSignupBtn.onclick);
-        });
-    });
+    if (showLoginBtn) {
+      showLoginBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        desktopSignupForm.classList.remove("active");
+        desktopLoginForm.classList.add("active");
+      });
+    }
 
     // Check URL params to show signup form if needed
     window.addEventListener("DOMContentLoaded", () => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get("form") === "signup") {
-        // For mobile
-        signupTab.click();
-
-        // For desktop
-        if (desktopSignupBtn) {
-          desktopSignupBtn.click();
+        // Mobile
+        if (signupTab) signupTab.click();
+        // Desktop
+        if (desktopLoginForm && desktopSignupForm) {
+          desktopLoginForm.classList.remove("active");
+          desktopSignupForm.classList.add("active");
         }
       }
     });

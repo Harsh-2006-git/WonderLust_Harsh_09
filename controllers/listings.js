@@ -1,20 +1,65 @@
 const Listing = require("../models/listing.js");
 const Review = require("../models/review.js");
 const User = require("../models/user.js");
+const Booking = require("../models/booking.js");
 
 module.exports = {
+  // ... existing methods ...
+  renderBookingForm: async (req, res) => {
+    const { id } = req.params;
+    const listing = await Listing.findById(id).populate("owner");
+    if (!listing) {
+      req.flash("error", "Listing not found");
+      return res.redirect("/listings");
+    }
+    res.render("listing/booking", { listing });
+  },
+
+  confirmBooking: async (req, res) => {
+    const { id } = req.params;
+    const { utr, startDate, endDate, amount } = req.body;
+    const listing = await Listing.findById(id);
+    
+    if (!listing) {
+      req.flash("error", "Listing not found");
+      return res.redirect("/listings");
+    }
+
+    const newBooking = new Booking({
+      listing: id,
+      user: req.user._id,
+      utr: utr,
+      amount: amount,
+      startDate: startDate,
+      endDate: endDate,
+      status: "Confirmed"
+    });
+
+    await newBooking.save();
+    req.flash("success", "Booking request submitted! We will verify your payment soon.");
+    res.redirect(`/listings/${id}`);
+  },
   // Index - List all listings
   index: async (req, res) => {
     try {
-      console.log("DEBUG: Fetching listings from DB...");
-      const AllListing = await Listing.find({}).populate("owner"); // populate owner for safety checks
-      console.log(`DEBUG: Found ${AllListing.length} listings`);
-      res.render("listing/index", { AllListing });
+      const AllListing = await Listing.find({}).populate("owner");
+      // Fetch all distinct countries from the DB dynamically
+      const countries = await Listing.distinct("country");
+      res.render("listing/index", { 
+        AllListing,
+        countries: countries.filter(Boolean).sort(),
+        searchText: "",
+        selectedCountry: "All Countries"
+      });
     } catch (err) {
       console.error("LOUD ERROR in Controller:", err);
-      // Don't redirect to / which might redirect back here.
-      // Render with empty array so page loads but shows error.
-      res.render("listing/index", { AllListing: [], error: "Database connection issue. Please check logs." });
+      res.render("listing/index", { 
+        AllListing: [], 
+        countries: [],
+        searchText: "",
+        selectedCountry: "All Countries",
+        error: "Database connection issue."
+      });
     }
   },
 

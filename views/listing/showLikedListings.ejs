@@ -1,7 +1,5 @@
-<!-- views/listings/showLikedListings.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,371 +8,188 @@
   <link rel="icon" href="https://scrnshts.club/wp-content/uploads/2022/05/ico.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
     :root {
-      --airbnb-white: #ffffff;
       --airbnb-primary-red: #ff385c;
       --airbnb-black: #222222;
+      --airbnb-gray-light: #f7f7f7;
+      --airbnb-gray-medium: #dddddd;
+      --airbnb-gray-dark: #717171;
+      --airbnb-white: #ffffff;
+      --airbnb-text: #222222;
+      --airbnb-hover-red: #e61e4d;
+    }
+
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
     }
 
     body {
-      background-color: #f7f7f7;
-      font-family: "Inter", sans-serif;
-      /* spacing handled by header partial spacer div */
+      background-color: var(--airbnb-gray-light);
+      color: var(--airbnb-text);
+      line-height: 1.5;
+      font-size: 14px;
     }
 
-    /* Favorites Page Styling */
-    .page-title {
-      color: var(--airbnb-primary-red);
-      font-weight: bold;
-      margin-bottom: 2rem;
-      border-bottom: 2px solid rgba(255, 56, 92, 0.2);
-      padding-bottom: 1rem;
-    }
-
-    .favorites-container {
-      margin: 2rem 0;
-    }
-
-    .card {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .page-header {
+      margin-top: 30px;
       margin-bottom: 30px;
-      height: 100%;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--airbnb-gray-medium);
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    .page-title {
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--airbnb-black);
     }
 
-    .card-img-top {
-      height: 200px;
+    /* Listing Card - Matching index.ejs */
+    .listing-card {
+      background-color: var(--airbnb-white);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--airbnb-gray-medium);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      margin-bottom: 24px;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+
+    .listing-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .listing-img {
+      width: 100%;
+      height: 280px;
       object-fit: cover;
     }
 
-    .card-body {
-      padding: 1.5rem;
-    }
-
-    .card-title {
-      color: var(--airbnb-black);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .card-location {
-      color: #666;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-
-    .card-price {
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: var(--airbnb-primary-red);
-    }
-
-    .card-text {
-      margin-bottom: 1rem;
-      color: #555;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+    .like-btn-container {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 10;
     }
 
     .like-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
       background-color: rgba(255, 255, 255, 0.9);
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+      transition: transform 0.2s ease;
       border: none;
-      z-index: 2;
+      cursor: pointer;
+      text-decoration: none !important;
+      outline: none !important;
     }
 
-    .like-btn i {
-      color: var(--airbnb-primary-red);
-      font-size: 18px;
+    .like-btn:focus, .like-btn:active {
+      outline: none !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
     }
 
-    .empty-favorites {
+    .like-btn:hover { transform: scale(1.1); }
+    .like-btn i { font-size: 20px; color: var(--airbnb-primary-red); }
+
+    .listing-details { padding: 20px; }
+    .listing-title { font-weight: 700; font-size: 18px; margin-bottom: 4px; color: var(--airbnb-black); }
+    .listing-location { color: var(--airbnb-gray-dark); font-size: 14px; margin-bottom: 12px; }
+    .listing-price { font-size: 16px; font-weight: 600; color: var(--airbnb-black); }
+    .price-tag { color: var(--airbnb-primary-red); font-weight: 700; }
+
+    .empty-state {
       text-align: center;
-      padding: 4rem 2rem;
-      background-color: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      padding: 80px 20px;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      margin: 40px 0;
     }
-
-    .empty-favorites i {
-      font-size: 4rem;
-      color: #ddd;
-      margin-bottom: 1.5rem;
-    }
-
-    .empty-favorites h3 {
-      margin-bottom: 1rem;
-      color: var(--airbnb-black);
-    }
-
+    .empty-state i { font-size: 64px; color: var(--airbnb-gray-medium); margin-bottom: 20px; }
+    .empty-state h3 { font-weight: 700; margin-bottom: 12px; }
+    .empty-state p { color: var(--airbnb-gray-dark); margin-bottom: 24px; }
     .browse-btn {
       background-color: var(--airbnb-primary-red);
       color: white;
       border: none;
-      padding: 0.8rem 2rem;
+      padding: 12px 32px;
       border-radius: 8px;
-      font-weight: 500;
-      margin-top: 1rem;
-      transition: background-color 0.3s ease;
-    }
-
-    .browse-btn:hover {
-      background-color: #e41e3f;
-    }
-
-    /* Responsive Styling */
-    @media (max-width: 768px) {
-      .page-title {
-        text-align: center;
-      }
-    }
-
-    /* Footer Styling */
-    .wonderlust-footer {
-      background-color: #ff385c;
-      color: white;
-      padding: 40px 0 20px;
-      margin-top: 3rem;
-    }
-
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 0 15px;
-    }
-
-    .footer-column {
-      flex: 1;
-      margin-right: 20px;
-      min-width: 200px;
-    }
-
-    .footer-column h4 {
-      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-      padding-bottom: 10px;
-      margin-bottom: 15px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .footer-column ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    .footer-column ul li {
-      margin-bottom: 10px;
-    }
-
-    .footer-column ul li a {
-      color: white;
+      font-weight: 600;
       text-decoration: none;
-      opacity: 0.8;
-      transition: opacity 0.3s ease;
+      transition: background 0.2s;
     }
-
-    .footer-column ul li a:hover {
-      opacity: 1;
-      text-decoration: underline;
-    }
-
-    .footer-bottom {
-      background-color: rgba(100, 90, 90, 0.1);
-      padding: 20px 0;
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .social-icons {
-      margin-bottom: 15px;
-    }
-
-    .social-icons a {
-      color: white;
-      margin: 0 10px;
-      font-size: 24px;
-      text-decoration: none;
-      transition: transform 0.3s ease;
-    }
-
-    .social-icons a:hover {
-      transform: scale(1.2);
-    }
-
-    .copyright {
-      font-size: 14px;
-      opacity: 0.8;
-    }
+    .browse-btn:hover { background-color: var(--airbnb-hover-red); color: white; }
 
     @media (max-width: 768px) {
-      .footer-container {
-        flex-direction: column;
-      }
-
-      .footer-column {
-        margin-bottom: 20px;
-        width: 100%;
-      }
-    }
-
-    @media (min-width: 768px) {
-      .gap {
-        margin-left: 5rem;
-      }
-    }
-
-    .abcd {
-      text-decoration: none;
-    }
-
-    .nav a :hover {
-      border-bottom: 5px solid red;
-      background-color: #e45050;
+      .listing-img { height: 200px; }
+      .page-title { font-size: 22px; }
+      .listing-card { margin-bottom: 16px; }
+      .listing-details { padding: 12px; }
     }
   </style>
 </head>
-
 <body>
   <%- include('../partials/header') %>
 
-  <div class="container favorites-container gap">
-    <h1 class="page-title">
-      <i class="fas fa-heart me-2" style="color: #ff385c"></i> Your Favorite
-      Listings
-    </h1>
+  <div class="container mt-4">
+    <div class="page-header">
+      <h1 class="page-title">
+        <i class="fas fa-heart me-2" style="color: var(--airbnb-primary-red)"></i> 
+        Your Favorite Listings
+      </h1>
+    </div>
 
-    <% if (likedListings && likedListings.length> 0) { %>
+    <% if (likedListings && likedListings.length > 0) { %>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        <% likedListings.forEach(listing=> { %>
+        <% likedListings.forEach(listing => { %>
           <div class="col">
-            <div class="card h-100">
-              <div class="position-relative">
-                <a href="/listings/<%= listing._id %>">
-                  <img src="<%= listing.image.url || listing.image %>" class="card-img-top"
-                    alt="<%= listing.title %>" />
-                </a>
-                <a href="/listings/<%= listing._id %>/like" class="like-btn abcd">
+            <div class="listing-card">
+              <div class="like-btn-container">
+                <a href="/user/<%= listing._id %>/like" class="like-btn">
                   <i class="fas fa-heart"></i>
                 </a>
               </div>
-              <div class="card-body">
-                <h5 class="card-title">
-                  <%= listing.title %>
-                </h5>
-                <p class="card-location">
-                  <i class="fas fa-map-marker-alt me-1"></i>
-                  <%= listing.location %>, <%= listing.country %>
-                </p>
-                <p class="card-text">
-                  <%= listing.description.substring(0, 100) %>...
-                </p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <p class="card-price mb-0">
-                    ₹<%= listing.price.toLocaleString() %> / night
+              <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
+                <img src="<%= listing.image.url || listing.image %>" class="listing-img" alt="<%= listing.title %>" />
+                <div class="listing-details">
+                  <h5 class="listing-title"><%= listing.title %></h5>
+                  <p class="listing-location">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    <%= listing.location %>, <%= listing.country %>
                   </p>
-                  <a href="/listings/<%= listing._id %>" class="btn btn-sm btn-outline-dark">View Details</a>
+                  <div class="listing-price">
+                    <span class="price-tag">₹<%= listing.price.toLocaleString() %></span> / night
+                  </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
-          <% }); %>
+        <% }); %>
       </div>
-      <% } else { %>
-        <div class="empty-favorites">
-          <i class="far fa-heart"></i>
-          <h3>You haven't saved any listings yet</h3>
-          <p>
-            Discover places you love and click the heart icon to save them here
-          </p>
-          <a href="/listings" class="btn browse-btn">Browse Listings</a>
-        </div>
-        <% } %>
+    <% } else { %>
+      <div class="empty-state">
+        <i class="far fa-heart"></i>
+        <h3>No favorites yet</h3>
+        <p>Start exploring and save the places that catch your eye!</p>
+        <a href="/listings" class="browse-btn">Explore Listings</a>
+      </div>
+    <% } %>
   </div>
 
-  <!-- Footer -->
-  <footer class="wonderlust-footer">
-    <div class="footer-container">
-      <div class="footer-column">
-        <h4>Discover</h4>
-        <ul>
-          <li><a href="#">Destinations</a></li>
-          <li><a href="#">Adventure Types</a></li>
-          <li><a href="#">Popular Routes</a></li>
-          <li><a href="#">Trending Locations</a></li>
-          <li><a href="#">Travel Guides</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h4>Book & Plan</h4>
-        <ul>
-          <li><a href="#">Accommodations</a></li>
-          <li><a href="#">Flights</a></li>
-          <li><a href="#">Tour Packages</a></li>
-          <li><a href="#">Travel Insurance</a></li>
-          <li><a href="#">Visa Information</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h4>About Wonderlust</h4>
-        <ul>
-          <li><a href="#">Our Story</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Press</a></li>
-          <li><a href="#">Investor Relations</a></li>
-          <li><a href="#">Corporate Responsibility</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h4>Support</h4>
-        <ul>
-          <li><a href="#">Help Center</a></li>
-          <li><a href="#">Customer Service</a></li>
-          <li><a href="#">Cancel Booking</a></li>
-          <li><a href="#">Refund Policy</a></li>
-          <li><a href="#">Accessibility</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="social-icons">
-        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-      </div>
-      <p class="copyright">&copy; 2025 Wonderlust. All Rights Reserved.</p>
-    </div>
-  </footer>
+  <%- include('../partials/footer') %>
 
-  <script>
-    function toggleDropdown() {
-      const dropdown = document.querySelector(".mobile-dropdown");
-      dropdown.classList.toggle("show");
-    }
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

@@ -6,7 +6,7 @@ const Listing = require("../models/listing");
 const { isLoggedIn } = require("../middleware/isLogin"); // Assuming you have middleware for authentication
 
 // Route to show liked listings for the current user
-router.get("/liked-listings", isLoggedIn, async (req, res) => {
+router.get("/liked", isLoggedIn, async (req, res) => {
   try {
     // Find the current user and populate their liked listings
     const user = await User.findById(req.user._id).populate({

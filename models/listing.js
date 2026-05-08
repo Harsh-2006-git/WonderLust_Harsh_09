@@ -35,6 +35,11 @@ const ListingSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    upiId: {
+      type: String,
+      default: "8305721431@axl",
+      required: true,
+    },
   },
   { timestamps: true }
 );

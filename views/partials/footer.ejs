@@ -42,6 +42,10 @@
     </div>
   </div>
   <div class="footer-bottom">
+    <div class="footer-mobile-brand">
+      <img src="https://cdn-icons-png.flaticon.com/512/4494/4494642.png" alt="WonderLust Logo" />
+      <span>WonderLust</span>
+    </div>
     <div class="social-icons">
       <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
       <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
@@ -49,14 +53,14 @@
       <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
       <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
     </div>
-    <p class="copyright">&copy; 2025 Wonderlust. All Rights Reserved.</p>
+    <p class="copyright">&copy; <%= new Date().getFullYear() %> Wonderlust. All Rights Reserved.</p>
   </div>
 </footer>
 
 <style>
   .wonderlust-footer {
-    background-color: var(--airbnb-primary-red);
-    color: white;
+    background-color: #ff385c; /* Explicit Airbnb Red */
+    color: #ffffff;
     padding: 40px 0 20px;
   }
 
@@ -76,11 +80,12 @@
   }
 
   .footer-column h4 {
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
     padding-bottom: 10px;
     margin-bottom: 15px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 700;
+    color: #ffffff;
   }
 
   .footer-column ul {
@@ -93,9 +98,9 @@
   }
 
   .footer-column ul li a {
-    color: white;
+    color: #ffffff;
     text-decoration: none;
-    opacity: 0.8;
+    opacity: 0.9;
     transition: opacity 0.3s ease;
   }
 
@@ -122,6 +127,59 @@
     font-size: 14px;
     opacity: 0.8;
     margin-top: 10px;
+  }
+
+  .footer-mobile-brand {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .footer-mobile-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .footer-mobile-brand img {
+      height: 40px;
+    }
+    .footer-mobile-brand span {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff !important; /* Explicit white for visibility */
+    }
+    .wonderlust-footer {
+      padding: 15px 0 !important;
+      margin-top: 15px !important;
+    }
+    .footer-container {
+      display: none !important; /* Hide links on mobile as requested */
+    }
+    .footer-bottom {
+      margin-top: 0 !important;
+      padding: 10px 0 !important;
+      background: transparent !important;
+      text-align: center !important;
+    }
+    .footer-mobile-brand {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .social-icons a {
+      font-size: 18px !important;
+      margin: 0 8px !important;
+      color: #ffffff !important;
+    }
+    .copyright {
+      font-size: 11px !important;
+      margin-top: 5px !important;
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
   }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

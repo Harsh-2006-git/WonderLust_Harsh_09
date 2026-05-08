@@ -6,6 +6,14 @@ const Review = require("../models/review.js");
 const User = require("../models/user.js");
 const { saveRedirectUrl } = require("../middleware/isLogin.js");
 const { isLoggedIn, isOwner } = require("../middleware/isLogin.js");
+const wrapAsync = require("../utils/wrapAsync.js");
+
+// My Bookings - GET /mybookings
+router.get("/mybookings", isLoggedIn, wrapAsync(async (req, res) => {
+  const Booking = require("../models/booking.js");
+  const bookings = await Booking.find({ user: req.user._id }).populate("listing");
+  res.render("user/mybookings", { bookings });
+}));
 
 // Combined auth page route
 router.get("/", (req, res) => {
@@ -149,14 +157,14 @@ router.post("/advanced-search", async (req, res) => {
 
     // Add country filter if specified
     if (country && country !== "All Countries") {
-      query.country = country;
+      query.country = { $regex: country, $options: "i" };
     }
 
     // Find listings that match the query
     const AllListing = await Listing.find(query).populate("owner");
 
     // Render the listings page with filtered results
-    res.render("listings/index", {
+    res.render("listing/index", {
       AllListing,
       currentUser: req.user, // Assuming you're using passport or similar auth
     });
@@ -167,38 +175,37 @@ router.post("/advanced-search", async (req, res) => {
   }
 });
 
-// You might also want to add a GET route for the same functionality
+// Advanced search GET route
 router.get("/advanced-search", async (req, res) => {
   try {
     const { searchText, country } = req.query;
+
     let query = {};
-
-    // Build search query
     if (searchText && searchText.trim() !== "") {
-      query = {
-        $or: [
-          { title: { $regex: searchText, $options: "i" } },
-          { description: { $regex: searchText, $options: "i" } },
-          { location: { $regex: searchText, $options: "i" } },
-        ],
-      };
+      query.$or = [
+        { title: { $regex: searchText, $options: "i" } },
+        { description: { $regex: searchText, $options: "i" } },
+        { location: { $regex: searchText, $options: "i" } },
+      ];
     }
-
-    // Add country filter if specified
     if (country && country !== "All Countries") {
-      query.country = country;
+      query.country = { $regex: country, $options: "i" };
     }
 
-    // Find listings that match the query
-    const AllListing = await Listing.find(query).populate("owner");
+    // Fetch matching listings AND all distinct countries for the dropdown
+    const [AllListing, countries] = await Promise.all([
+      Listing.find(query).populate("owner"),
+      Listing.distinct("country"),
+    ]);
 
-    // Render the listings page with filtered results
     res.render("listing/index", {
       AllListing,
-      currentUser: req.user,
+      countries: countries.filter(Boolean).sort(),
+      searchText: searchText || "",
+      selectedCountry: country || "All Countries",
     });
   } catch (err) {
-    console.error("Search error:", err);
+    console.error("LOUD Search Error:", err);
     req.flash("error", "Error performing search");
     res.redirect("/listings");
   }

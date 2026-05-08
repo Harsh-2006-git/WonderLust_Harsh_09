@@ -59,6 +59,7 @@ app.use(flash()); // Add flash middleware
 app.use(express.urlencoded({ extended: true })); // Parse form data
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public"))); // For serving static files
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve uploads folder
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));

@@ -48,14 +48,20 @@
 
       /* Search Container */
       .search-container {
-        margin-top: 20px;
+        margin-top: 15px;
         background-color: var(--airbnb-white);
-        border: 1px solid var(--airbnb-gray-medium);
+        border: 1.5px solid #dddddd;
         border-radius: 40px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
         padding: 16px;
         display: flex;
         align-items: center;
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      }
+
+      .search-container:hover {
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        border-color: #bbbbbb;
       }
 
       .search-container input,
@@ -219,17 +225,25 @@
       /* Responsive Adjustments */
       @media (max-width: 768px) {
         .search-container {
-          margin-top: 80px;
-          flex-direction: column;
+          margin-top: 15px;
         }
-
-        .search-container > div {
-          width: 100%;
-          margin-bottom: 12px;
+        .search-container .form-select {
+          padding-left: 8px;
+          padding-right: 25px;
+          font-size: 13px;
+          height: 38px;
+        }
+        .search-container .btn {
+          height: 38px;
+          font-size: 13px;
+          padding: 0;
         }
         .border {
           margin-bottom: 10px;
           border: 5px solid var(--airbnb-primary-red);
+        }
+        .categories-scroll {
+          animation: scroll 8s linear infinite; /* Much faster scroll on mobile */
         }
       }
       .img img {
@@ -291,6 +305,7 @@
         display: flex;
         gap: 24px;
         animation: scroll 25s linear infinite;
+        width: max-content; /* Ensure icons stay in one line */
       }
 
       .category-item {
@@ -323,8 +338,48 @@
       }
 
       @media (max-width: 768px) {
-        .categories-scroll { animation-duration: 12s; }
-        .categories-container { padding: 10px 20px; margin-top: -5px; }
+        .search-container {
+          margin-top: 15px;
+          padding: 12px;
+        }
+        .search-divider {
+          display: none; /* Hide dividers on mobile */
+        }
+        .search-container .form-select {
+          padding-left: 8px;
+          padding-right: 25px;
+          font-size: 13px;
+          height: 38px;
+        }
+        .search-container .btn {
+          height: 38px;
+          font-size: 13px;
+          padding: 0;
+          justify-content: center;
+        }
+        .border {
+          margin-bottom: 10px;
+          border: 5px solid var(--airbnb-primary-red);
+        }
+        .categories-scroll {
+          animation: scroll 30s linear infinite !important; /* Very slow and calm for mobile */
+        }
+        .categories-container { 
+          padding: 10px 20px; 
+          margin-top: -5px; 
+        }
+        .listing-card {
+          margin-bottom: 16px;
+        }
+        .listing-img {
+          height: 200px;
+        }
+        .listing-details {
+          padding: 12px;
+        }
+        .listing-title {
+          font-size: 15px;
+        }
       }
     </style>
   </head>
@@ -337,36 +392,29 @@
       <!-- Replace your existing search-container with this updated version -->
       <div class="search-container">
         <form action="/advanced-search" method="GET" class="w-100">
-          <div class="row w-100">
-            <div class="col-md-8">
+          <div class="row w-100 g-2 align-items-center">
+            <div class="col-12 col-md-8">
               <input
                 type="text"
                 name="searchText"
                 class="form-control border"
                 placeholder="Search by location, title, or description..."
+                value="<%= typeof searchText !== 'undefined' ? searchText : '' %>"
               />
             </div>
-            <div class="col-md-2">
-              <select class="form-select border" name="country">
-                <option selected value="All Countries">All Countries</option>
-                <option value="india">India</option>
-                <option value="Costa Rica">Costa Rica</option>
-                <option value="United States">USA</option>
-                <option value="Switzerland">Switzerland</option>
-                <option value="France">France</option>
-                <option value="Italy">Italy</option>
-                <option value="Japan">Japan</option>
-                <option value="Netherlands">Netherlands</option>
-                <option value="Tanzania">Tanzania</option>
-                <option value="Kingdom">UK London</option>
-                <option value="Indonesia">Indonesia</option>
-                <option value="Greece">Greece</option>
-                <option value="Maldives">Maldives</option>
 
-                <!-- Add more countries as needed -->
+            <div class="col-6 col-md-2">
+              <select class="form-select border" name="country" onchange="this.form.submit()">
+                <option value="All Countries" <%= selectedCountry === 'All Countries' ? 'selected' : '' %>>All Countries</option>
+                <% if (typeof countries !== 'undefined') { %>
+                  <% countries.forEach(function(c) { %>
+                    <option value="<%= c %>" <%= selectedCountry === c ? 'selected' : '' %>><%= c %></option>
+                  <% }); %>
+                <% } %>
               </select>
             </div>
-            <div class="col-md-2">
+
+            <div class="col-6 col-md-2">
               <button type="submit" class="btn btn-primary w-100">
                 <i class="fas fa-search"></i> Search
               </button>
@@ -380,54 +428,42 @@
       <!--scroll bar -->
           <div class="categories-container">
             <div class="categories-scroll">
-              <a href="#" class="category-item"
-                ><div class="category-icon-container">
-                  <i class="fas fa-umbrella-beach"></i>
-                </div>
-                <span class="category-name">Beach</span></a
-              >
-              <a href="#" class="category-item"
-                ><div class="category-icon-container">
-                  <i class="fas fa-water"></i>
-                </div>
-                <span class="category-name">Lake</span></a
-              >
-              <a href="#" class="category-item"
-                ><div class="category-icon-container">
-                  <i class="fas fa-tree"></i>
-                </div>
-                <span class="category-name">Countryside</span></a
-              >
-              <a href="#" class="category-item"
-                ><div class="category-icon-container">
-                  <i class="fas fa-campground"></i>
-                </div>
-                <span class="category-name">Camping</span></a
-              >
-              <a href="#" class="category-item"
-                ><div class="category-icon-container">
-                  <i class="fas fa-hotel"></i>
-                </div>
-                <span class="category-name">Cabin</span></a
-              >
-              <a href="#" class="category-item"
-                ><div class="category-icon-container">
-                  <i class="fas fa-ship"></i>
-                </div>
-                <span class="category-name">Boat</span></a
-              >
-              <a href="#" class="category-item"
-                ><div class="category-icon-container">
-                  <i class="fas fa-swimming-pool"></i>
-                </div>
-                <span class="category-name">Pools</span></a
-              >
-              <a href="#" class="category-item"
-                ><div class="category-icon-container">
-                  <i class="fas fa-building"></i>
-                </div>
-                <span class="category-name">House</span></a
-              >
+              <a href="/advanced-search?searchText=Beach&country=All Countries" class="category-item">
+                <div class="category-icon-container"><i class="fas fa-umbrella-beach"></i></div>
+                <span class="category-name">Beach</span>
+              </a>
+              <a href="/advanced-search?searchText=Lake&country=All Countries" class="category-item">
+                <div class="category-icon-container"><i class="fas fa-water"></i></div>
+                <span class="category-name">Lake</span>
+              </a>
+              <a href="/advanced-search?searchText=Mountain&country=All Countries" class="category-item">
+                <div class="category-icon-container"><i class="fas fa-mountain"></i></div>
+                <span class="category-name">Mountain</span>
+              </a>
+              <a href="/advanced-search?searchText=Countryside&country=All Countries" class="category-item">
+                <div class="category-icon-container"><i class="fas fa-tree"></i></div>
+                <span class="category-name">Countryside</span>
+              </a>
+              <a href="/advanced-search?searchText=Camping&country=All Countries" class="category-item">
+                <div class="category-icon-container"><i class="fas fa-campground"></i></div>
+                <span class="category-name">Camping</span>
+              </a>
+              <a href="/advanced-search?searchText=Cabin&country=All Countries" class="category-item">
+                <div class="category-icon-container"><i class="fas fa-hotel"></i></div>
+                <span class="category-name">Cabin</span>
+              </a>
+              <a href="/advanced-search?searchText=Boat&country=All Countries" class="category-item">
+                <div class="category-icon-container"><i class="fas fa-ship"></i></div>
+                <span class="category-name">Boat</span>
+              </a>
+              <a href="/advanced-search?searchText=Pools&country=All Countries" class="category-item">
+                <div class="category-icon-container"><i class="fas fa-swimming-pool"></i></div>
+                <span class="category-name">Pools</span>
+              </a>
+              <a href="/advanced-search?searchText=House&country=All Countries" class="category-item">
+                <div class="category-icon-container"><i class="fas fa-building"></i></div>
+                <span class="category-name">House</span>
+              </a>
               <a href="#" class="category-item"
                 ><div class="category-icon-container">
                   <i class="fas fa-place-of-worship"></i>
@@ -614,137 +650,7 @@
         margin: 0;
         font-family: "Arial", sans-serif;
       }
-      .wonderlust-footer {
-        background-color: #ff385c;
-        color: white;
-        padding: 40px 0 20px;
-      }
-      .footer-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 0 15px;
-      }
-      .footer-column {
-        flex: 1;
-        margin-right: 20px;
-        min-width: 200px;
-      }
-      .footer-column h4 {
-        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-        font-size: 16px;
-        font-weight: bold;
-      }
-      .footer-column ul {
-        list-style-type: none;
-        padding: 0;
-      }
-      .footer-column ul li {
-        margin-bottom: 10px;
-      }
-      .footer-column ul li a {
-        color: white;
-        text-decoration: none;
-        opacity: 0.8;
-        transition: opacity 0.3s ease;
-      }
-      .footer-column ul li a:hover {
-        opacity: 1;
-        text-decoration: underline;
-      }
-      .footer-bottom {
-        background-color: rgba(100, 90, 90, 0.1);
-        padding: 20px 0;
-        text-align: center;
-        margin-top: 20px;
-      }
-      .social-icons {
-        margin-bottom: 15px;
-      }
-      .social-icons a {
-        color: white;
-        margin: 0 10px;
-        font-size: 24px;
-        text-decoration: none;
-        transition: transform 0.3s ease;
-      }
-      .social-icons a:hover {
-        transform: scale(1.2);
-      }
-      .copyright {
-        font-size: 14px;
-        opacity: 0.8;
-      }
-      @media (max-width: 768px) {
-        .footer-container {
-          flex-direction: column;
-        }
-        .footer-column {
-          margin-bottom: 20px;
-          width: 100%;
-        }
-      }
     </style>
-    <body>
-      <footer class="wonderlust-footer">
-        <div class="footer-container">
-          <div class="footer-column">
-            <h4>Discover</h4>
-            <ul>
-              <li><a href="#">Destinations</a></li>
-              <li><a href="#">Adventure Types</a></li>
-              <li><a href="#">Popular Routes</a></li>
-              <li><a href="#">Trending Locations</a></li>
-              <li><a href="#">Travel Guides</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Book & Plan</h4>
-            <ul>
-              <li><a href="#">Accommodations</a></li>
-              <li><a href="#">Flights</a></li>
-              <li><a href="#">Tour Packages</a></li>
-              <li><a href="#">Travel Insurance</a></li>
-              <li><a href="#">Visa Information</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>About Wonderlust</h4>
-            <ul>
-              <li><a href="#">Our Story</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Press</a></li>
-              <li><a href="#">Investor Relations</a></li>
-              <li><a href="#">Corporate Responsibility</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h4>Support</h4>
-            <ul>
-              <li><a href="#">Help Center</a></li>
-              <li><a href="#">Customer Service</a></li>
-              <li><a href="#">Cancel Booking</a></li>
-              <li><a href="#">Refund Policy</a></li>
-              <li><a href="#">Accessibility</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <div class="social-icons">
-            <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
-          </div>
-          <p class="copyright">&copy; 2025 Wonderlust. All Rights Reserved.</p>
-        </div>
-      </footer>
-    </body>
 
     <script>
       function toggleDropdown() {
@@ -847,5 +753,16 @@
       }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Infinite Loop for Categories
+      document.addEventListener('DOMContentLoaded', () => {
+        const scroll = document.querySelector('.categories-scroll');
+        if (scroll) {
+          // Duplicate the content to create a seamless loop
+          scroll.innerHTML += scroll.innerHTML;
+        }
+      });
+    </script>
+    <%- include('../partials/footer') %>
   </body>
 </html>

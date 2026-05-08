@@ -4,347 +4,290 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Listing | WonderLust</title>
+  <title>Host Your Home | WonderLust</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="icon" href="https://scrnshts.club/wp-content/uploads/2022/05/ico.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --airbnb-red: #ff385c;
-      --airbnb-dark: #222222;
-      --airbnb-light-gray: #f7f7f7;
-      --airbnb-text: #484848;
-      --airbnb-border: #ebebeb;
-      --airbnb-hover-red: #e61e4d;
-    }
-
-    * {
-      box-sizing: border-box;
-      transition: all 0.2s ease;
+      --primary: #ff385c;
+      --primary-hover: #e61e4d;
+      --dark: #222222;
+      --light-gray: #f7f7f7;
+      --border: #dddddd;
+      --text-muted: #717171;
     }
 
     body {
-      font-family: "Circular", -apple-system, BlinkMacSystemFont, Roboto,
-        Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-      background-color: var(--airbnb-light-gray);
-      color: var(--airbnb-text);
-      line-height: 1.4;
-    }
-
-    .app-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .navbar {
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 30px;
-    }
-
-    .navbar-brand {
-      color: var(--airbnb-red) !important;
-      font-weight: 800;
-      font-size: 1.5rem;
-    }
-
-    .listing-form {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-      padding: 40px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .form-section {
-      border-bottom: 1px solid var(--airbnb-border);
-      padding-bottom: 25px;
-      margin-bottom: 25px;
-    }
-
-    .form-section:last-of-type {
-      border-bottom: none;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .section-header i {
-      color: var(--airbnb-red);
-      margin-right: 15px;
-      font-size: 1.5rem;
-    }
-
-    .section-title {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--airbnb-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--light-gray);
+      color: var(--dark);
       margin: 0;
+      padding: 0;
     }
 
-    .form-label {
-      font-weight: 500;
-      color: var(--airbnb-dark);
+    .form-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .form-card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      padding: 40px;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .page-title {
+      font-weight: 800;
+      font-size: 2.2rem;
+      color: var(--dark);
       margin-bottom: 8px;
     }
 
-    .form-control,
-    .form-select {
-      border: 1px solid var(--airbnb-border);
-      border-radius: 10px;
-      padding: 12px 15px;
-      transition: all 0.3s ease;
+    .page-subtitle {
+      color: var(--text-muted);
+      margin-bottom: 40px;
     }
 
-    .form-control:focus,
-    .form-select:focus {
-      border-color: var(--airbnb-red);
-      box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.2);
+    .section-label {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      color: var(--primary);
+    }
+
+    .section-label i {
+      margin-right: 12px;
+      background: rgba(255, 56, 92, 0.1);
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    .form-floating > label {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .form-control, .form-select {
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(255, 56, 92, 0.1);
     }
 
     .input-group-text {
-      background-color: transparent;
-      border: 1px solid var(--airbnb-border);
+      background: var(--light-gray);
+      border: 1.5px solid var(--border);
       border-right: none;
-    }
-
-    .btn-primary {
-      background-color: var(--airbnb-red);
-      border-color: var(--airbnb-red);
-      border-radius: 10px;
-      padding: 12px 24px;
+      border-radius: 14px 0 0 14px;
+      color: var(--dark);
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
-    .btn-primary:hover {
-      background-color: var(--airbnb-hover-red);
-      border-color: var(--airbnb-hover-red);
+    .input-group .form-control {
+      border-radius: 0 14px 14px 0;
+    }
+
+    .btn-create {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 16px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      width: 100%;
+      margin-top: 20px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .btn-create:hover {
+      background: var(--primary-hover);
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px rgba(255, 56, 92, 0.3);
+      color: white;
     }
 
-    .btn-outline-secondary {
-      border-radius: 10px;
-      border-color: var(--airbnb-dark);
-      color: var(--airbnb-dark);
-      transition: all 0.3s ease;
+    .btn-cancel {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
     }
 
-    .btn-outline-secondary:hover {
-      background-color: var(--airbnb-light-gray);
-      border-color: var(--airbnb-dark);
+    .btn-cancel:hover {
+      color: var(--dark);
     }
 
-    .character-count {
-      font-size: 0.875rem;
-      color: #717171;
+    .char-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
       text-align: right;
-      margin-top: 5px;
+      margin-top: 4px;
     }
 
-    @media (max-width: 768px) {
-      .listing-form {
-        padding: 20px;
-      }
+    /* Validation Styles */
+    .was-validated .form-control:invalid {
+      border-color: #dc3545;
+      background-image: none;
+    }
 
-      .section-title {
-        font-size: 1.2rem;
+    .was-validated .form-control:valid {
+      border-color: #198754;
+      background-image: none;
+    }
+
+    .invalid-feedback {
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-left: 5px;
+    }
+
+    .input-group.has-validation .invalid-feedback {
+      display: block;
+      margin-top: 5px;
+      width: 100%;
+    }
+
+    @media (max-width: 576px) {
+      .form-card {
+        padding: 25px;
+        border-radius: 16px;
+      }
+      .page-title {
+        font-size: 1.8rem;
       }
     }
   </style>
 </head>
 
 <body>
-
-  <style>
-    .back {
-      background-color: #d50c3d;
-      color: #ebebeb;
-      border-radius: 50px;
-      font-size: 28px;
-    }
-
-    .piche { margin-top: -3.5rem; }
-    .pich  { margin-top: -1rem; }
-
-    body { /* spacing handled by header partial spacer div */ }
-  </style>
-
   <%- include('../partials/header') %>
+  <%- include('../partials/flash') %>
 
-      <script>
-        function toggleDropdown() {
-          const dropdownContent = document.querySelector('.mobile-dropdown-content');
-          dropdownContent.classList.toggle('show');
-        }
+  <div class="form-container">
+    <div class="text-center mb-4">
+      <h1 class="page-title">Airbnb your home</h1>
+      <p class="page-subtitle">Share your space and start earning with WonderLust</p>
+    </div>
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function (event) {
-          const dropdown = document.querySelector('.mobile-dropdown-content');
-          const dropdownBtn = document.querySelector('.mobile-dropdown-btn');
+    <div class="form-card">
+      <form action="/listings" method="POST" class="needs-validation" novalidate>
+        
+        <!-- Section 1: Content -->
+        <div class="section-label">
+          <i class="fas fa-pen-nib"></i>
+          Listing Details
+        </div>
+        
+        <div class="mb-4">
+          <label class="form-label fw-600">Title</label>
+          <input type="text" name="listing[title]" class="form-control" 
+                 placeholder="e.g. Modern Loft with City View" required minlength="5">
+          <div class="invalid-feedback">A catchy title of at least 5 characters is required.</div>
+        </div>
 
-          if (dropdown.classList.contains('show') &&
-            !dropdown.contains(event.target) &&
-            !dropdownBtn.contains(event.target)) {
-            dropdown.classList.remove('show');
+        <div class="mb-4">
+          <label class="form-label fw-600">Description</label>
+          <textarea name="listing[description]" class="form-control" rows="4" 
+                    placeholder="Tell guests about your space, amenities, and neighborhood..." required id="descInput"></textarea>
+          <div class="char-count" id="charCount">0 characters</div>
+          <div class="invalid-feedback">Please provide a short description.</div>
+        </div>
+
+        <!-- Section 2: Media -->
+        <div class="section-label mt-5">
+          <i class="fas fa-camera"></i>
+          Media
+        </div>
+        <div class="mb-4">
+          <label class="form-label fw-600">Image URL</label>
+          <input type="url" name="listing[image]" class="form-control" 
+                 placeholder="https://images.unsplash.com/photo-..." required>
+          <div class="invalid-feedback">Please enter a valid image URL.</div>
+        </div>
+
+        <!-- Section 3: Location -->
+        <div class="section-label mt-5">
+          <i class="fas fa-map-marked-alt"></i>
+          Location & Pricing
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <label class="form-label fw-600">City/Location</label>
+            <input type="text" name="listing[location]" class="form-control" placeholder="New York" required>
+            <div class="invalid-feedback">City name is required.</div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <label class="form-label fw-600">Country</label>
+            <input type="text" name="listing[country]" class="form-control" placeholder="USA" required>
+            <div class="invalid-feedback">Country name is required.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <label class="form-label fw-600">Price per night</label>
+            <div class="input-group">
+              <span class="input-group-text">₹</span>
+              <input type="number" name="listing[price]" class="form-control" placeholder="2500" required min="1">
+            </div>
+            <div class="invalid-feedback">Please enter a valid price.</div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <label class="form-label fw-600">UPI ID (for payments)</label>
+            <input type="text" name="listing[upiId]" class="form-control" placeholder="yourname@upi" required>
+            <div class="invalid-feedback">Required for receiving guest payments.</div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-create mt-4">
+          Create Listing
+        </button>
+        
+        <a href="/listings" class="btn-cancel">Cancel</a>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    (() => {
+      'use strict'
+      const forms = document.querySelectorAll('.needs-validation')
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
           }
-        });
-      </script>
-    </body>
-    <%- include('../partials/flash') %>
-      <div class="app-container">
-        <form class="listing-form needs-validation" action="/listings" method="POST" novalidate>
-          <div class="form-section">
-            <div class="section-header">
-              <i class="fas fa-home"></i>
-              <h2 class="section-title">Basic Information</h2>
-            </div>
+          form.classList.add('was-validated')
+        }, false)
+      })
 
-            <div class="row">
-              <div class="col-12 mb-0">
-                <label for="title" class="form-label">Listing Title</label>
-                <input type="text" class="form-control" id="title" name="listing[title]" required
-                  placeholder="Cozy beachfront cottage" />
-                <div class="invalid-feedback">
-                  Please provide a title for your listing.
-                </div>
-              </div>
+      const descInput = document.getElementById('descInput');
+      const charCount = document.getElementById('charCount');
+      descInput.addEventListener('input', () => {
+        charCount.textContent = `${descInput.value.length} characters`;
+      });
+    })()
+  </script>
+  <%- include('../partials/footer') %>
+</body>
 
-              <div class="col-12">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="listing[description]" rows="1" required
-                  placeholder="Tell guests what makes your place special" maxlength="500"></textarea>
-                <div class="invalid-feedback">
-                  Please provide a description for your listing.
-                </div>
-                <div class="character-count">0/500</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-section piche">
-            <div class="section-header">
-              <i class="fas fa-image"></i>
-              <h2 class="section-title">Photos</h2>
-            </div>
-
-            <div class="row">
-              <div class="col-12">
-                <label for="image" class="form-label">Main Photo URL</label>
-                <input type="url" class="form-control" id="image" name="listing[image]"
-                  placeholder="https://example.com/your-photo.jpg" />
-                <div class="invalid-feedback">
-                  Please provide a valid image URL.
-                </div>
-                <small class="text-muted">Add more photos after creating your listing</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-section pich">
-            <div class="section-header">
-              <i class="fas fa-tag"></i>
-              <h2 class="section-title">Pricing</h2>
-            </div>
-
-            <div class="row">
-              <div class="col-md-0">
-                <label for="price">Price per Night</label>
-                <div class="input-group has-validation">
-                  <span class="input-group-text">₹</span>
-                  <input type="number" class="form-control" id="price" name="listing[price]" min="0" required
-                    placeholder="100" />
-                  <div class="invalid-feedback">
-                    Please provide a valid price.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-section pich">
-            <div class="section-header">
-              <i class="fas fa-map-marker-alt"></i>
-              <h2 class="section-title">Location</h2>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="country" class="form-label">Country</label>
-                <input type="text" class="form-control" id="country" name="listing[country]" required
-                  placeholder="Country" />
-                <div class="invalid-feedback">
-                  Please provide a country.
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label for="location" class="form-label">City/Area</label>
-                <input type="text" class="form-control" id="location" name="listing[location]" required
-                  placeholder="City or area" />
-                <div class="invalid-feedback">
-                  Please provide a city or area.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row mt-4">
-            <div class="col-12 d-grid gap-3">
-              <button type="submit" class="btn btn-primary btn-lg">
-                <i class="fas fa-plus me-2"></i>Create Listing
-              </button>
-              <a href="/listings" class="btn btn-outline-secondary btn-lg">
-                <i class="fas fa-times me-2"></i>Cancel
-              </a>
-            </div>
-          </div>
-        </form>
-      </div>
-
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-      <script>
-        const description = document.getElementById("description");
-        const charCount = document.querySelector(".character-count");
-
-        description.addEventListener("input", function () {
-          const count = this.value.length;
-          charCount.textContent = `${count}/500`;
-
-          if (count >= 450) {
-            charCount.style.color = "#ff385c"; // Fixed from let(--airbnb - red)
-          } else {
-            charCount.style.color = "#717171";
-          }
-        });
-
-
-        (() => {
-          'use strict'
-
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          const forms = document.querySelectorAll('.needs-validation')
-
-          // Loop over them and prevent submission
-          Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-              if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
-              }
-
-              form.classList.add('was-validated')
-            }, false)
-          })
-        })()
-      </script>
-  </body>
-
-</html>
+</html>

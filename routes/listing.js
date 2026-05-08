@@ -35,7 +35,10 @@ router.get("/:id/like", isLoggedIn, wrapAsync(ListingController.likedListing));
 // Update listing - PUT /listings/:id
 router.put("/:id", isLoggedIn, wrapAsync(ListingController.updateListing));
 
-// Delete listing - DELETE /listings/:id
-router.delete("/:id", isLoggedIn, wrapAsync(ListingController.deleteListing));
+// Booking - GET /listings/:id/book
+router.get("/:id/book", isLoggedIn, wrapAsync(ListingController.renderBookingForm));
+
+// Confirm Booking - POST /listings/:id/book
+router.post("/:id/book", isLoggedIn, wrapAsync(ListingController.confirmBooking));
 
 module.exports = router;
